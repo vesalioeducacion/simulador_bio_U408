@@ -1,0 +1,2518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BIOLOGÍA - Fisiología Sensorial y Vías Aferentes (Facultad de Cs. Médicas - UCCuyo)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Outfit & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- KaTeX for medical & biophysical formulas -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Outfit', sans-serif;
+      background-color: #f7f9f6;
+      color: #1e293b;
+    }
+    .font-mono {
+      font-family: 'JetBrains Mono', monospace;
+    }
+    /* Paleta Institucional UCCuyo (Verde Oliva y Contrastes Biomédicos) */
+    .text-accent { color: #436600; }
+    .bg-accent { background-color: #436600; }
+    .bg-accent-hover:hover { background-color: #324d00; }
+    .bg-accent-light { background-color: #f1f6eb; }
+    .border-accent { border-color: #436600; }
+
+    .text-primary { color: #436600; }
+    .bg-primary { background-color: #436600; }
+    .bg-primary-dark { background-color: #324d00; }
+    .border-primary { border-color: #436600; }
+    
+    .focus-accent:focus {
+      border-color: #436600;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(67, 102, 0, 0.2);
+    }
+    
+    input[type=range] {
+      accent-color: #436600;
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 10px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .interactive-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .interactive-card:hover {
+      transform: translateY(-2px);
+      border-color: #436600;
+      box-shadow: 0 10px 25px -5px rgba(67, 102, 0, 0.12);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-accent/20 text-gray-800">
+
+  <!-- Cabecera Institucional UCCuyo -->
+  <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3 sm:py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-lg bg-accent flex items-center justify-center text-white font-bold text-xl shadow-md">
+          BIO
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-gray-800 tracking-wide uppercase">BIOLOGÍA CELULAR Y HUMANA</h1>
+          <p class="text-xs text-gray-500 font-semibold">Curso de Ingreso a Medicina (Facultad de Cs. Médicas - UCCuyo)</p>
+        </div>
+      </div>
+      
+      <div class="flex items-center gap-2">
+        <!-- Botón Vademécum Teórico -->
+        <button onclick="openFormulasModal()" class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-700 text-xs font-semibold rounded-lg border border-gray-200 hover:bg-gray-200 transition">
+          <i class="fa-solid fa-book-bookmark text-accent"></i>
+          <span class="hidden sm:inline">Vademécum</span>
+        </button>
+        <!-- Botón Guía de Uso -->
+        <button onclick="openTutorial()" class="flex items-center gap-1.5 px-3 py-1.5 bg-accent text-white text-xs font-semibold rounded-lg shadow-sm hover:opacity-90 transition">
+          <i class="fa-solid fa-circle-question"></i>
+          <span>Guía de Uso</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido Principal con Barra Lateral -->
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 md:p-6 flex flex-col lg:flex-row gap-6">
+    
+    <!-- Menú de Navegación Lateral -->
+    <nav class="w-full lg:w-64 flex flex-row lg:flex-col gap-2 bg-white p-3 rounded-2xl shadow-sm border border-gray-200 overflow-x-auto lg:overflow-x-visible whitespace-nowrap lg:whitespace-normal sticky top-20 h-fit" id="navTabs">
+      <button onclick="switchTab('mod1')" data-tab="mod1" class="nav-btn bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition shadow-sm flex items-center gap-2">
+        <i class="fa-solid fa-diagram-project"></i> <span>1. Eslabón Universal</span>
+      </button>
+      <button onclick="switchTab('mod2')" data-tab="mod2" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-eye"></i> <span>2. Globo Ocular & Óptica</span>
+      </button>
+      <button onclick="switchTab('mod3')" data-tab="mod3" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-sun"></i> <span>3. Fototransducción</span>
+      </button>
+      <button onclick="switchTab('mod4')" data-tab="mod4" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-ear-listen"></i> <span>4. Oído Externo & Medio</span>
+      </button>
+      <button onclick="switchTab('mod5')" data-tab="mod5" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2">
+        <i class="fa-solid fa-wave-square"></i> <span>5. Cóclea & Corti</span>
+      </button>
+      <button onclick="switchTab('modQuiz')" data-tab="modQuiz" class="nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2 border-t lg:border-t border-gray-100">
+        <i class="fa-solid fa-graduation-cap text-accent"></i> <span>6. Examen de Ingreso</span>
+      </button>
+    </nav>
+
+    <!-- Área de Contenido Dinámico -->
+    <div class="flex-1 space-y-6 min-w-0">
+      <section id="mod1" class="module-section space-y-6">
+      <!-- Module Intro Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-sky-600 p-6 rounded-2xl shadow-xl">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-sky-700 text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-certificate"></i>
+              <span>Módulo 1 • Principio de Transducción Sensorial</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Eslabón Funcional Universal & Estructuras Protectoras</h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+              Todo sistema sensorial traduce variaciones energéticas del entorno físico en señales electroquímicas que el sistema nervioso central interpreta como percepciones conscientes.
+            </p>
+          </div>
+          <div class="bg-white border border-slate-200 p-3 rounded-xl flex items-center space-x-3 self-start md:self-auto">
+            <i class="fa-solid fa-bolt text-amber-700 text-2xl"></i>
+            <div>
+              <p class="text-[11px] text-slate-600 uppercase font-semibold">Principio Biofísico</p>
+              <p class="text-xs text-slate-700 font-mono">Energía $\to$ $V_m$ $\to$ PA $\to$ Corteza</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive 4-Stage Sensory Chain Model -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-lg">
+        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center">
+          <i class="fa-solid fa-diagram-next mr-2 text-sky-700"></i>
+          Esquema Funcional Universal de la Percepción Sensorial
+        </h3>
+        <p class="text-xs text-slate-600 mb-6">
+          Haz clic en cualquiera de los 4 eslabones para desplegar el análisis biofísico y neuroanatómico específico:
+        </p>
+
+        <!-- 4 Step Flowchart -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="eslabonesChain">
+          <!-- Step 1 -->
+          <div onclick="selectEslabon(1)" id="eslabon-card-1" class="cursor-pointer bg-white hover:bg-slate-100 border-2 border-sky-500 p-4 rounded-xl transition duration-200 relative group shadow-md">
+            <span class="absolute top-2 right-2 text-xs font-black text-sky-700 font-mono">01</span>
+            <div class="w-10 h-10 rounded-lg bg-sky-50 text-sky-700 border border-sky-200 flex items-center justify-center text-sky-700 mb-3 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-wave-square text-lg"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">Estímulo Físico</h4>
+            <p class="text-xs text-slate-600 mt-1">Fotones ($\lambda = 400\text{--}700\,\text{nm}$) u ondas acústicas $(\text{Hz})$.</p>
+            <div class="mt-3 text-[11px] text-sky-700 font-medium flex items-center">
+              <span>Explorar dinámica</span> <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div onclick="selectEslabon(2)" id="eslabon-card-2" class="cursor-pointer bg-white hover:bg-slate-100 border border-slate-200 p-4 rounded-xl transition duration-200 relative group">
+            <span class="absolute top-2 right-2 text-xs font-black text-slate-600 font-mono">02</span>
+            <div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-300/40 flex items-center justify-center text-amber-700 mb-3 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-microchip text-lg"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">Potencial Receptor</h4>
+            <p class="text-xs text-slate-600 mt-1">Transducción bioeléctrica graduada local (amplitud proporcional al estímulo).</p>
+            <div class="mt-3 text-[11px] text-slate-600 font-medium flex items-center">
+              <span>Explorar dinámica</span> <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div onclick="selectEslabon(3)" id="eslabon-card-3" class="cursor-pointer bg-white hover:bg-slate-100 border border-slate-200 p-4 rounded-xl transition duration-200 relative group">
+            <span class="absolute top-2 right-2 text-xs font-black text-slate-600 font-mono">03</span>
+            <div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-300/40 flex items-center justify-center text-rose-700 mb-3 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-bolt-lightning text-lg"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">Potencial de Acción</h4>
+            <p class="text-xs text-slate-600 mt-1">Codificación en frecuencia "todo o nada" sobre la vía aferente nerviosa.</p>
+            <div class="mt-3 text-[11px] text-slate-600 font-medium flex items-center">
+              <span>Explorar dinámica</span> <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div onclick="selectEslabon(4)" id="eslabon-card-4" class="cursor-pointer bg-white hover:bg-slate-100 border border-slate-200 p-4 rounded-xl transition duration-200 relative group">
+            <span class="absolute top-2 right-2 text-xs font-black text-slate-600 font-mono">04</span>
+            <div class="w-10 h-10 rounded-lg bg-slate-100 border border-slate-300/40 flex items-center justify-center text-purple-700 mb-3 group-hover:scale-105 transition-transform">
+              <i class="fa-solid fa-brain text-lg"></i>
+            </div>
+            <h4 class="text-sm font-bold text-slate-800">Interpretación Cortical</h4>
+            <p class="text-xs text-slate-600 mt-1">Corteza visual primaria (área 17) o auditiva (áreas 41-42 de Brodmann).</p>
+            <div class="mt-3 text-[11px] text-slate-600 font-medium flex items-center">
+              <span>Explorar dinámica</span> <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detail Box for selected Eslabón -->
+        <div id="eslabonDetailBox" class="mt-6 bg-white border border-sky-200 shadow-sm rounded-xl p-5 text-sm text-slate-800">
+          <!-- Injected dynamically via selectEslabon() -->
+        </div>
+      </div>
+
+      <!-- Estructuras Accesorias y Protectoras Oculares -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Aparato Lagrimal & Lisozima -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-2 text-sky-700 mb-2">
+              <i class="fa-solid fa-droplet text-lg"></i>
+              <h4 class="font-bold text-slate-900 text-base">Aparato Lagrimal & Barrera Bioquímica</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-4">
+              Circulación continua de lágrima producida en la <strong class="text-sky-700">glándula lagrimal</strong> (fosa lagrimal súpero-lateral de la órbita), lavando la superficie corneal hacia los <strong class="text-sky-700">canalículos lagrimales</strong>, <strong class="text-sky-700">saco lagrimal</strong> y desembocando en el meato inferior de la nariz por el <strong class="text-sky-700">conducto nasolagrimal</strong>.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 mb-3">
+              <div class="flex items-center space-x-2 text-rose-700 text-xs font-semibold mb-1">
+                <i class="fa-solid fa-shield-virus"></i>
+                <span>Enzima Lisozima (Muramidasa)</span>
+              </div>
+              <p class="text-[12px] text-slate-600">
+                Hidroliza los enlaces $\beta(1\to 4)$ entre el ácido $N$-acetilmurámico y la $N$-acetilglucosamina del peptidoglicano bacteriano, previniendo queratitis e infecciones oculares graves.
+              </p>
+            </div>
+          </div>
+          <button onclick="showQuickFact('Aparato Lagrimal', 'La obstrucción del conducto nasolagrimal causa epífora (lagrimeo continuo) y dacriocistitis bacteriana aguda, patología que se evalúa frecuentemente en semiología de cabeza y cuello.')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-xs text-sky-700 font-semibold rounded-lg transition">
+            Ver Importancia Clínica
+          </button>
+        </div>
+
+        <!-- Párpados, Pestañas y Conjuntiva -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-2 text-indigo-400 mb-2">
+              <i class="fa-solid fa-shield-halved text-lg"></i>
+              <h4 class="font-bold text-slate-900 text-base">Párpados & Conjuntiva</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              Los párpados actúan como obturadores mecánicos; las pestañas interceptan partículas. El parpadeo constante renueva la película lagrimal precorneal trilaminar (lipídica, acuosa y mucínica).
+            </p>
+            <ul class="text-xs text-slate-600 space-y-2 mb-4">
+              <li class="flex items-start">
+                <i class="fa-solid fa-circle-check text-sky-700 mt-1 mr-2 text-[10px]"></i>
+                <span><strong class="text-slate-800">Conjuntiva Palpebral:</strong> Membrana mucosa vascularizada que tapiza la cara interna de ambos párpados.</span>
+              </li>
+              <li class="flex items-start">
+                <i class="fa-solid fa-circle-check text-sky-700 mt-1 mr-2 text-[10px]"></i>
+                <span><strong class="text-slate-800">Conjuntiva Bulbar:</strong> Se refleja en los fondos de saco y cubre la esclerótica anterior hasta el limbo esclerocorneal (respetando la córnea transparente).</span>
+              </li>
+            </ul>
+          </div>
+          <button onclick="showQuickFact('Glándulas de Meibomio', 'Las glándulas tarsales secretan la película lipídica superficial que retarda la evaporación del componente acuoso de la lágrima. Su obstrucción produce un chalazión.')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-xs text-indigo-300 font-semibold rounded-lg transition">
+            Ver Glándulas de Meibomio
+          </button>
+        </div>
+
+        <!-- Músculos Extrínsecos del Ojo -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-2 text-amber-700 mb-2">
+              <i class="fa-solid fa-arrows-up-down-left-right text-lg"></i>
+              <h4 class="font-bold text-slate-900 text-base">Músculos Extrínsecos (6)</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              Coordinan los movimientos conjugados binoculares y la convergencia ocular fijando la imagen en la fóvea:
+            </p>
+            <div class="text-[12px] space-y-1.5 font-mono text-slate-600 bg-slate-50 p-2.5 rounded-lg border border-slate-200">
+              <p><span class="text-sky-700 font-bold">NC III (Oculomotor):</span> Recto Sup., Recto Inf., Recto Medial, Oblicuo Inf.</p>
+              <p><span class="text-amber-700 font-bold">NC IV (Troclear):</span> Oblicuo Superior (polea troclear).</p>
+              <p><span class="text-rose-700 font-bold">NC VI (Abducens):</span> Recto Lateral (abducción).</p>
+            </div>
+            <p class="text-[11px] text-slate-600 mt-2 italic">Mnemotecnia clínica clásica: $(SO_4 - LR_6)_3$.</p>
+          </div>
+          <button onclick="showQuickFact('Parálisis del VI Par', 'La lesión del nervio abducens imposibilita la mirada lateral externa, produciendo diplopía binocular horizontal y estrabismo convergente.')" class="w-full py-2 bg-slate-100 hover:bg-slate-200 text-xs text-amber-700 font-semibold rounded-lg transition">
+            Correlación Clínica: Estrabismo
+          </button>
+        </div>
+      </div>
+    </section>
+      <section id="mod2" class="module-section hidden space-y-6">
+      <!-- Title Banner -->
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-sky-600">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-sky-700 text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-circle-nodes"></i>
+              <span>Módulo 2 • Anatomía y Óptica Ocular</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Túnicas Oculares, Humor Acuoso y Mecanismo de Acomodación</h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+              Arquitectura concéntrica del globo ocular, hidrodinámica del humor acuoso ($\text{PIO}$) y la biofísica del cristalino en la tríada de visión cercana.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 Túnicas Interactive Explorer -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+        <h3 class="text-lg font-bold text-slate-900 mb-4 flex items-center">
+          <i class="fa-solid fa-layer-group text-sky-700 mr-2"></i>
+          Las Tres Túnicas Oculares Concéntricas
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <!-- Túnica Fibrosa -->
+          <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-slate-400 hover:border-sky-400 transition">
+            <span class="text-[11px] font-bold text-slate-600 uppercase tracking-wider">Túnica Externa (Fibrosa)</span>
+            <h4 class="text-base font-bold text-slate-900 mt-1">Esclerótica & Córnea</h4>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              <strong>Esclerótica (5/6 posteriores):</strong> Tejido conectivo colágeno denso avascular de soporte y rigidez esférica.
+              <br><br>
+              <strong>Córnea (1/6 anterior):</strong> Disco transparente avascular con curvatura fija; aporta cerca de $+40\text{--}+43\,\text{D}$ de las $+60\,\text{D}$ refractivas totales del ojo humano.
+            </p>
+          </div>
+
+          <!-- Túnica Vascular -->
+          <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-rose-500 hover:border-rose-400 transition">
+            <span class="text-[11px] font-bold text-rose-700 uppercase tracking-wider">Túnica Media (Vascular / Úvea)</span>
+            <h4 class="text-base font-bold text-slate-900 mt-1">Coroides, Cuerpo Ciliar e Iris</h4>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              <strong>Coroides:</strong> Muy irrigada y cargada de melanina; absorbe fotones dispersos simulando una cámara oscura.
+              <br><br>
+              <strong>Cuerpo Ciliar:</strong> Procesos ciliares (síntesis de humor acuoso) y músculo ciliar parasimpático (acomodación).
+              <br><br>
+              <strong>Iris:</strong> Diafragma contráctil que regula el diámetro pupilar.
+            </p>
+          </div>
+
+          <!-- Túnica Nerviosa -->
+          <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-amber-400 hover:border-amber-300 transition">
+            <span class="text-[11px] font-bold text-amber-700 uppercase tracking-wider">Túnica Interna (Nerviosa)</span>
+            <h4 class="text-base font-bold text-slate-900 mt-1">Retina Neurosensorial</h4>
+            <p class="text-xs text-slate-600 mt-2 leading-relaxed">
+              Capa de origen diencefálico estructurada en 10 estratos celulares. Contiene las células fotorreceptoras (conos y bastones), interneuronas bipolares, horizontales, amacrinas y las neuronas de proyección ganglionares cuyos axones convergen en el nervio óptico.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Reflejo Fotomotor / Dinámica Pupilar Interactive Box -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+        <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+          <div class="flex-1 space-y-3">
+            <div class="flex items-center space-x-2 text-rose-700 text-xs font-bold uppercase tracking-wider">
+              <i class="fa-solid fa-circle-dot"></i>
+              <span>Evaluación de Tronco Encefálico</span>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800">Reflejos Pupilar Fotomotor y Consensual</h3>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              La luz estimula la retina $\to$ axones ganglionares viajan por el nervio óptico (NC II) al <strong class="text-slate-800">área pretectal</strong> del mesencéfalo $\to$ axones bilaterales conectan con los <strong class="text-slate-800">núcleos de Edinger-Westphal</strong> (componente visceral del NC III) $\to$ ganglio ciliar $\to$ nervios ciliares cortos $\to$ contracción del músculo esfínter pupilar, causando <strong class="text-rose-700">miosis bilateral simultánea</strong>.
+            </p>
+            <div class="flex flex-wrap gap-2 pt-2">
+              <button onclick="setPupilState('light')" class="px-4 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl shadow transition flex items-center">
+                <i class="fa-solid fa-lightbulb mr-2"></i>Aplicar Linterna (Luz Intensa)
+              </button>
+              <button onclick="setPupilState('dark')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 transition flex items-center">
+                <i class="fa-solid fa-moon mr-2"></i>Penumbra / Oscuridad (Simpático)
+              </button>
+            </div>
+          </div>
+
+          <!-- Dynamic Eye Pupil Display -->
+          <div class="w-full sm:w-72 bg-slate-50 p-6 rounded-2xl border border-slate-200 flex flex-col items-center">
+            <div class="text-center mb-3">
+              <span id="pupilStatusLabel" class="text-xs font-bold text-amber-700 uppercase tracking-widest">Penumbra Basal</span>
+              <p id="pupilAutonomicLabel" class="text-[11px] text-slate-600">Tono Simpático Activo</p>
+            </div>
+            <!-- Eye SVG Representation -->
+            <div class="relative w-40 h-40 flex items-center justify-center">
+              <!-- Sclera -->
+              <div class="w-36 h-36 rounded-full bg-slate-200 shadow-inner border-2 border-slate-400 flex items-center justify-center relative overflow-hidden">
+                <!-- Iris -->
+                <div id="irisVisual" class="w-28 h-28 rounded-full bg-gradient-to-r from-amber-700 via-amber-800 to-amber-900 border-2 border-amber-950 flex items-center justify-center transition-all duration-500 shadow-md">
+                  <!-- Pupil -->
+                  <div id="pupilAperture" class="w-14 h-14 rounded-full bg-slate-50 transition-all duration-500 flex items-center justify-center shadow-inner">
+                    <div class="w-2 h-2 rounded-full bg-white/40 -mt-2 -ml-2"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="w-full mt-4 text-[11px] text-center text-slate-600 bg-white py-1.5 px-2 rounded-lg border border-slate-200 font-mono" id="pupilDiameterText">
+              Diámetro pupilar: $5.0\,\text{mm}$ (Respuesta Basal)
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cavidades, Humor Acuoso y Glaucoma (Biofísica del drenaje) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Humor Acuoso Dynamics -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl">
+          <div class="flex items-center justify-between mb-3">
+            <h4 class="font-bold text-slate-900 text-base flex items-center">
+              <i class="fa-solid fa-faucet-drip text-sky-700 mr-2"></i>
+              Dinámica del Humor Acuoso y Presión Intraocular
+            </h4>
+            <span class="text-xs bg-sky-50 text-sky-800 border border-sky-200 text-sky-700 font-mono px-2 py-0.5 rounded">
+              $\text{PIO} = 10\text{--}21\,\text{mmHg}$
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-600 leading-relaxed mb-4">
+            El humor acuoso es un ultrafiltrado plasmático modificado activamente por transporte iónico ($\text{Na}^+, \text{HCO}_3^-$) en el epitelio de los <strong class="text-sky-700">procesos ciliares</strong> (cámara posterior).
+          </p>
+
+          <!-- Flow steps diagram -->
+          <div class="space-y-2 text-xs">
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex items-center space-x-3">
+              <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center justify-center text-[11px]">1</span>
+              <p class="text-slate-600">Síntesis continua en <strong>cuerpo ciliar (procesos ciliares)</strong> hacia la cámara posterior.</p>
+            </div>
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex items-center space-x-3">
+              <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center justify-center text-[11px]">2</span>
+              <p class="text-slate-600">Pasa por el orificio pupilar hacia la <strong>cámara anterior</strong> bañando la córnea posterior.</p>
+            </div>
+            <div class="bg-slate-50 p-2.5 rounded-lg border border-slate-200 flex items-center space-x-3">
+              <span class="w-6 h-6 rounded-full bg-sky-100 text-sky-800 border border-sky-300 font-bold flex items-center justify-center text-[11px]">3</span>
+              <p class="text-slate-600">Filtrado en la malla trabecular del ángulo iridocorneal $\to$ <strong>canal de Schlemm</strong> $\to$ venas epiesclerales.</p>
+            </div>
+          </div>
+
+          <div class="mt-4 p-3 bg-red-950/40 border border-red-800/60 rounded-xl">
+            <h5 class="text-xs font-bold text-red-300 flex items-center">
+              <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>
+              Glaucoma y Neuropatía Óptica Compresiva
+            </h5>
+            <p class="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              El desbalance entre producción y resistencia al drenaje eleva la $\text{PIO} > 22\,\text{mmHg}$. Esta sobrepresión mecánica y compromiso vascular isquémico comprime los axones de las células ganglionares en la lámina cribosa de la esclera, generando pérdida concéntrica del campo visual y excavación patológica del disco óptico.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cavidad Posterior & Cuerpo Vítreo -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center space-x-2 text-indigo-400 mb-3">
+              <i class="fa-solid fa-cubes-stacked text-lg"></i>
+              <h4 class="font-bold text-slate-900 text-base">Cuerpo Vítreo (Cámara Vítrea Posterior)</h4>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">
+              Ocupa las cuatro quintas partes del globo ocular por detrás del cristalino. A diferencia del humor acuoso que se recambia constantemente, el cuerpo vítreo es un <strong class="text-indigo-300">hidrogel transparente permanente</strong> sintetizado principalmente durante el desarrollo embrionario.
+            </p>
+            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 mb-3">
+              <p class="text-xs text-slate-700">
+                <span class="text-indigo-400 font-semibold">• Composición:</span> $99\%$ agua, red tridimensional fibrilar de <strong>colágeno tipo II</strong> embebida en moléculas hidrofílicas de <strong>ácido hialurónico</strong>.
+              </p>
+              <p class="text-xs text-slate-700">
+                <span class="text-indigo-400 font-semibold">• Funciones Vitales:</span> Aposición y soporte mecánico de la retina neurosensorial contra el epitelio pigmentario coroideo, mantenimiento de la turgencia y volumen ocular, y amortiguación elástica de impactos mecánicos.
+              </p>
+            </div>
+          </div>
+          <div class="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-600">
+            <strong class="text-slate-800">Alerta de Examen:</strong> El humor vítreo NO se renueva; la tracción vitreorretiniana con sinéresis senil puede producir desgarros retinianos y fotopsias ("destellos de luz").
+          </div>
+        </div>
+      </div>
+
+      <!-- Óptica Ocular y Simulador Interactivo de Acomodación -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg">
+        <div class="flex flex-col md:flex-row md:items-center justify-between pb-4 border-b border-slate-200 gap-3">
+          <div>
+            <h3 class="text-lg font-bold text-slate-900 flex items-center">
+              <i class="fa-solid fa-glasses mr-2 text-sky-700"></i>
+              Simulador Óptico: Tríada de Acomodación & Enfoque Retiniano
+            </h3>
+            <p class="text-xs text-slate-600">
+              Modifica la distancia del objeto y el estado del músculo ciliar para visualizar el trazado de rayos luminosos y la proyección de la imagen invertida sobre la retina.
+            </p>
+          </div>
+          <!-- Mode toggles -->
+          <div class="flex items-center space-x-2">
+            <span class="text-xs text-slate-600">Condición:</span>
+            <select id="visionConditionSelect" onchange="updateOpticsSimulation()" class="bg-slate-50 text-sky-700 border border-slate-200 text-xs rounded-lg px-2.5 py-1.5 focus:outline-none focus:border-sky-500">
+              <option value="emmetropia">Ojo Emétrope (Normal)</option>
+              <option value="myopia">Ojo Miope (Globo alargado / Exceso refractivo)</option>
+              <option value="hyperopia">Ojo Hipermétrope (Globo corto / Déficit refractivo)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Controls row -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-4 bg-slate-50 p-4 rounded-xl border border-slate-200">
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <label class="font-bold text-slate-600">Distancia del Objeto (Punto de Fijación):</label>
+              <span id="objDistLabel" class="text-sky-700 font-mono font-bold">5.0 metros (Visión Lejana)</span>
+            </div>
+            <input type="range" id="objectDistSlider" min="0.2" max="6.0" step="0.1" value="5.0" oninput="onObjectDistChange(this.value)" class="w-full cursor-pointer h-2 bg-slate-100 rounded-lg">
+            <div class="flex justify-between text-[10px] text-slate-600 mt-1">
+              <span>Cercano (20 cm)</span>
+              <span>Visión Lejana (&ge; 6 m)</span>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-center text-xs mb-1.5">
+              <label class="font-bold text-slate-600">Músculo Ciliar / Acomodación del Cristalino:</label>
+              <span id="ciliaryStateLabel" class="text-amber-700 font-mono font-bold">Relajado (Zónula Tensa / Cristalino Aplanado)</span>
+            </div>
+            <div class="flex gap-2">
+              <button onclick="setAccommodateMode(false)" id="btnAccomRelajado" class="flex-1 py-1.5 px-3 bg-sky-600 text-white rounded-lg text-xs font-semibold">
+                Visión Lejana (Músculo Relajado)
+              </button>
+              <button onclick="setAccommodateMode(true)" id="btnAccomActivo" class="flex-1 py-1.5 px-3 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-lg text-xs font-semibold">
+                Acomodar (Músculo Contraído)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ray Tracing Interactive Canvas -->
+        <div class="relative w-full bg-slate-50 rounded-xl border border-slate-200 p-2 overflow-hidden flex flex-col items-center">
+          <canvas id="opticsCanvas" class="w-full h-64 sm:h-80 block bg-slate-50 rounded-xl border border-slate-200"></canvas>
+
+          <!-- Bottom readout status bar -->
+          <div class="w-full grid grid-cols-1 sm:grid-cols-3 gap-2 mt-2 pt-2 border-t border-slate-200 text-[11px] text-center">
+            <div class="bg-white p-1.5 rounded">
+              <span class="text-slate-600 block">Poder Dióptrico Cristalino:</span>
+              <strong id="lensDiopterText" class="text-sky-700 font-mono font-bold">+19.0 D (+59 D total)</strong>
+            </div>
+            <div class="bg-white p-1.5 rounded">
+              <span class="text-slate-600 block">Punto Focal Retiniano:</span>
+              <strong id="focalStatusText" class="text-emerald-700 font-mono font-bold">Foco Nítido en Fóvea</strong>
+            </div>
+            <div class="bg-white p-1.5 rounded">
+              <span class="text-slate-600 block">Proyección en Retina:</span>
+              <strong class="text-amber-700 font-mono font-bold">Real, Invertida y Menor</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Triad explanation footer -->
+        <div class="mt-4 p-4 bg-slate-50 rounded-xl border border-slate-200">
+          <h4 class="text-xs font-bold text-sky-700 uppercase tracking-wider mb-2 flex items-center">
+            <i class="fa-solid fa-list-check mr-2"></i>Tríada del Reflejo de Acomodación (Cercanía)
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs text-slate-600">
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 block mb-0.5">1. Contracción Ciliar:</strong>
+              Relaja las fibras de la zónula de Zinn, permitiendo la elasticidad intrínseca del cristalino para abombarse (mayor curvatura y poder dióptrico).
+            </div>
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 block mb-0.5">2. Miosis Pupilar Leve:</strong>
+              El esfínter pupilar reduce el diámetro del diafragma aumentando la profundidad de foco y eliminando aberraciones cromáticas esféricas periféricas.
+            </div>
+            <div class="p-2 rounded bg-white border border-slate-200">
+              <strong class="text-slate-900 block mb-0.5">3. Convergencia Ocular:</strong>
+              Contracción bilateral sinérgica de los músculos rectos mediales (NC III) para alinear ambos ejes ópticos simultáneamente sobre el objeto próximo.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+      <section id="mod3" class="module-section hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-sky-600">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-sky-700 text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-eye-low-vision"></i>
+              <span>Módulo 3 • Fisiología de la Retina & Neurotransmisión</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Estratificación Retiniana, Fototransducción y Vía Visual</h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+              Análisis biofísico de la corriente oscura, la paradoja de la hiperpolarización luminosa y el mapa de decusación en el quiasma óptico.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Estratificación Retiniana Inversa: Luz vs Señal -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center">
+          <i class="fa-solid fa-arrows-split-up-and-left text-amber-700 mr-2"></i>
+          La Paradoja Anatómica: Estratificación Invertida de la Retina
+        </h3>
+        <p class="text-xs text-slate-600 mb-4 leading-relaxed">
+          En los ojos vertebrados, la luz debe atravesar el espesor de las capas celulares no mielinizadas para incidir en los segmentos externos de los fotorreceptores. Observa la oposición de los vectores de incidencia de la luz y propagación de la señal eléctrica:
+        </p>
+
+        <!-- Retinal Layer Flow Graphic -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+              <span class="text-xs font-bold text-amber-700 flex items-center">
+                <i class="fa-solid fa-sun mr-2"></i>Vector 1: Incidencia del Haz Luminoso
+              </span>
+              <span class="text-[10px] bg-amber-50 text-amber-800 border border-amber-200 px-2 py-0.5 rounded font-mono">Entrada de Fotones</span>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="p-2 bg-white rounded border-l-2 border-amber-400 text-slate-600">
+                1. Atraviesa axones de células ganglionares (Capa de fibras del nervio óptico)
+              </div>
+              <div class="p-2 bg-white rounded border-l-2 border-amber-400 text-slate-600">
+                2. Capa de células ganglionares y plexiforme interna
+              </div>
+              <div class="p-2 bg-white rounded border-l-2 border-amber-400 text-slate-600">
+                3. Capa nuclear interna (células bipolares, horizontales, amacrinas)
+              </div>
+              <div class="p-2 bg-white rounded border-l-2 border-amber-400 text-slate-600">
+                4. Segmentos externos de <strong>conos y bastones</strong> aposados en el epitelio pigmentario
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+              <span class="text-xs font-bold text-sky-700 flex items-center">
+                <i class="fa-solid fa-bolt mr-2"></i>Vector 2: Flujo Electroquímico de la Señal
+              </span>
+              <span class="text-[10px] bg-sky-50 text-sky-800 border border-sky-200 px-2 py-0.5 rounded font-mono">Hacia el Encéfalo</span>
+            </div>
+            <div class="space-y-2 text-xs">
+              <div class="p-2 bg-white rounded border-l-2 border-sky-400 text-slate-600">
+                1. <strong>Fotorreceptores:</strong> Generan potencial receptor hiperpolarizante
+              </div>
+              <div class="p-2 bg-white rounded border-l-2 border-sky-400 text-slate-600">
+                2. <strong>Células Bipolares:</strong> Transmisión local graduada modulada por c. horizontales
+              </div>
+              <div class="p-2 bg-white rounded border-l-2 border-sky-400 text-slate-600">
+                3. <strong>Células Ganglionares:</strong> Únicas que disparan <em>Potenciales de Acción</em> clásicos
+              </div>
+              <div class="p-2 bg-white rounded border-l-2 border-sky-400 text-slate-600">
+                4. <strong>Nervio Óptico (NC II):</strong> Proyección axonal al Cuerpo Geniculado Lateral
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cones vs Rods Table -->
+        <div class="mt-4 overflow-x-auto">
+          <table class="w-full text-xs text-left text-slate-600 border border-slate-200 rounded-xl overflow-hidden">
+            <thead class="bg-slate-50 text-slate-600 uppercase text-[10px]">
+              <tr>
+                <th class="p-3">Característica Fisiológica</th>
+                <th class="p-3 text-sky-700">Bastones (Visión Escotópica)</th>
+                <th class="p-3 text-rose-700">Conos (Visión Fotópica)</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 bg-white/60">
+              <tr>
+                <td class="p-3 font-semibold text-slate-800">Sensibilidad Lumínica</td>
+                <td class="p-3">Extrema (captan fotones individuales, se saturan con luz diurna)</td>
+                <td class="p-3">Menor sensibilidad, requieren iluminación intensa/diurna</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-slate-800">Visión Cromática / Pigmento</td>
+                <td class="p-3">Monocromática (escala de grises) • <strong>Rodopsina</strong></td>
+                <td class="p-3">Tricromática: Cono S ($\lambda=420\,\text{nm}$), M ($530\,\text{nm}$), L ($560\,\text{nm}$)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-slate-800">Distribución Retiniana</td>
+                <td class="p-3">Densos en retina periférica, ausentes en el centro foveal</td>
+                <td class="p-3">Concentración máxima en la <strong>fóvea central</strong> (alta agudeza)</td>
+              </tr>
+              <tr>
+                <td class="p-3 font-semibold text-slate-800">Circuitería y Convergencia</td>
+                <td class="p-3">Alta convergencia (muchos bastones $\to$ una célula bipolar)</td>
+                <td class="p-3">Línea directa en fóvea ($1\text{ cono} \to 1\text{ bipolar} \to 1\text{ ganglionar}$)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- SIMULADOR BIOFÍSICO DE FOTOTRANSDUCCIÓN -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-3">
+          <div>
+            <div class="flex items-center space-x-2 text-rose-700 text-xs font-bold uppercase tracking-wider">
+              <i class="fa-solid fa-atom"></i>
+              <span>Biofísica Celular de Membrana</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Simulador de Fototransducción: La Paradoja de la Hiperpolarización</h3>
+          </div>
+          <!-- Toggle state buttons -->
+          <div class="flex bg-slate-50 p-1 rounded-xl border border-slate-200">
+            <button onclick="setPhotoState('dark')" id="btnPhotoDark" class="px-4 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white transition flex items-center">
+              <i class="fa-solid fa-moon mr-1.5 text-amber-700"></i>En la Oscuridad
+            </button>
+            <button onclick="setPhotoState('light')" id="btnPhotoLight" class="px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-900 transition flex items-center">
+              <i class="fa-solid fa-sun mr-1.5 text-yellow-400"></i>Ante la Luz
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+          <!-- Left: Dynamic Bioelectric Voltmeter & Diagram -->
+          <div class="bg-slate-50 p-5 rounded-xl border border-slate-200 flex flex-col justify-between items-center text-center">
+            <span class="text-xs font-bold text-slate-600 uppercase tracking-widest">Potencial de Membrana ($V_m$)</span>
+
+            <!-- Big Voltmeter Gauge -->
+            <div class="my-6 relative flex flex-col items-center">
+              <div id="vmGlowCircle" class="w-36 h-36 rounded-full border-4 border-amber-500 bg-amber-500/10 flex flex-col items-center justify-center transition-all duration-500 shadow-lg">
+                <span id="vmVoltageDisplay" class="text-3xl font-black text-amber-700 font-mono">-40 mV</span>
+                <span id="vmStateLabel" class="text-[10px] text-amber-700 uppercase font-semibold mt-1">Despolarización Basal</span>
+              </div>
+            </div>
+
+            <!-- Biochemical concentrations badges -->
+            <div class="w-full space-y-2 text-xs">
+              <div class="flex justify-between p-2 bg-white rounded border border-slate-200">
+                <span class="text-slate-600">$[\text{GMPc}]$ citosólico:</span>
+                <strong id="photoCgmpText" class="text-amber-700 font-mono font-bold">Elevado (Abre canales $\text{Na}^+$)</strong>
+              </div>
+              <div class="flex justify-between p-2 bg-white rounded border border-slate-200">
+                <span class="text-slate-600">Corriente Oscura ($\text{Na}^+$):</span>
+                <strong id="photoCurrentText" class="text-amber-700 font-mono font-bold">Activa (Flujo entrante)</strong>
+              </div>
+              <div class="flex justify-between p-2 bg-white rounded border border-slate-200">
+                <span class="text-slate-600">Liberación de Glutamato:</span>
+                <strong id="photoGluText" class="text-rose-700 font-mono font-bold">Tónica Continua (Inhibitoria)</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- Center & Right: Biochemical cascade narrative -->
+          <div class="lg:col-span-2 bg-slate-50 p-5 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <div class="flex items-center justify-between mb-3 border-b border-slate-200 pb-2">
+                <h4 id="cascadeTitle" class="text-sm font-bold text-slate-900 flex items-center">
+                  <i class="fa-solid fa-flask-vial text-sky-700 mr-2"></i>Mecanismo Bioquímico: Oscuridad
+                </h4>
+                <span id="cascadeBadge" class="text-[10px] bg-slate-100 text-slate-600 font-mono px-2 py-0.5 rounded">Estado Basal</span>
+              </div>
+
+              <div id="cascadeDescription" class="text-xs text-slate-600 space-y-3 leading-relaxed">
+                <!-- Injected via setPhotoState() -->
+              </div>
+            </div>
+
+            <!-- Chemical reaction box -->
+            <div class="mt-4 p-3 bg-white rounded-xl border border-slate-200 font-mono text-xs text-sky-700" id="cascadeFormula" class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 font-mono text-xs text-slate-800">
+              $$\text{Guanylyl cyclase} \implies \text{GTP} \longrightarrow \text{GMPc} \uparrow \implies \text{Canales CNG abiertos} \implies \text{Na}^+ \text{ entra} \implies V_m \approx -40\,\text{mV}$$
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vía Visual y Decusación Quiasmática -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-lg">
+        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center">
+          <i class="fa-solid fa-route text-sky-700 mr-2"></i>
+          Vía Visual: Campos Visuales, Quiasma Óptico y Corteza Occipital
+        </h3>
+        <p class="text-xs text-slate-600 mb-4">
+          La decusación quiasmática selectiva permite que cada hemisferio cerebral procese el <strong>hemicampo visual contralateral</strong>.
+        </p>
+
+        <!-- Visual Pathway Canvas & Interactive Lesion Selector -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div class="lg:col-span-2 bg-slate-50 rounded-xl border border-slate-200 p-3 flex flex-col items-center">
+            <canvas id="pathwayCanvas" class="w-full h-80 block bg-slate-50 rounded-xl border border-slate-200"></canvas>
+            <p class="text-[11px] text-slate-600 mt-2 text-center">
+              Diagrama esquemático de axones nasales (decusan en quiasma, <span class="text-rose-700 font-bold">rojo</span>) y temporales (ipsilaterales, <span class="text-sky-700 font-bold">azul</span>).
+            </p>
+          </div>
+
+          <!-- Clinical lesions simulator -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div>
+              <span class="text-xs font-bold text-rose-700 uppercase tracking-widest block mb-2">Simulador de Lesiones de la Vía</span>
+              <p class="text-xs text-slate-600 mb-3">
+                Selecciona una localización anatómica para predecir el déficit campimétrico resultante:
+              </p>
+              <div class="space-y-2">
+                <button onclick="simulateVisualLesion('nerve')" id="btnLesionNerve" class="w-full text-left p-2.5 rounded-lg text-xs bg-white hover:bg-white border border-slate-200 text-slate-700 font-semibold transition">
+                  1. Nervio Óptico Derecho (NC II)
+                </button>
+                <button onclick="simulateVisualLesion('chiasm')" id="btnLesionChiasm" class="w-full text-left p-2.5 rounded-lg text-xs bg-white hover:bg-white border border-slate-200 text-slate-700 font-semibold transition">
+                  2. Quiasma Óptico (Adenoma Hipofisario)
+                </button>
+                <button onclick="simulateVisualLesion('tract')" id="btnLesionTract" class="w-full text-left p-2.5 rounded-lg text-xs bg-white hover:bg-white border border-slate-200 text-slate-700 font-semibold transition">
+                  3. Tracto Óptico Izquierdo
+                </button>
+              </div>
+            </div>
+
+            <!-- Campimetry deficit visual box -->
+            <div id="campimetryResultBox" class="mt-4 p-3 bg-white rounded-xl border border-slate-200">
+              <span class="text-[11px] font-bold text-sky-700 block uppercase">Defecto de Campo Visual:</span>
+              <p id="campimetryResultTitle" class="text-xs font-bold text-slate-900 mt-1">Visión Binocular Normal</p>
+              <p id="campimetryResultDesc" class="text-[11px] text-slate-600 mt-1">Selecciona una lesión arriba para observar el patrón clínico característico evaluado en el ingreso médico.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+      <section id="mod4" class="module-section hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-amber-600">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-amber-700 text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-volume-high"></i>
+              <span>Módulo 4 • Biofísica de la Audición I</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Oído Externo, Medio y Amplificación Mecánica</h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+              Física de la adaptación de impedancias acústicas, función de la cadena de huesecillos, reflejo de atenuación y la trompa auditiva.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Oído Externo y Oído Medio Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Oído Externo -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl">
+          <div class="flex items-center space-x-2 text-sky-700 mb-2">
+            <i class="fa-solid fa-satellite-dish text-lg"></i>
+            <h4 class="font-bold text-slate-900 text-base">Oído Externo</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Constituido por el <strong class="text-slate-800">pabellón auricular</strong> (cartílago elástico que recoge las ondas sonoras y provee claves de localización espectral vertical) y el <strong class="text-slate-800">conducto auditivo externo (CAE)</strong> de unos $2.5\,\text{cm}$ de longitud.
+          </p>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2 text-xs text-slate-600">
+            <p><strong class="text-sky-700">Resonancia Acústica:</strong> El conducto actúa como un tubo cerrado en un extremo, amplificando pasivamente frecuencias conversacionales críticas entre $2000\text{--}4000\,\text{Hz}$ hasta en $+10\text{--}+15\,\text{dB}$.</p>
+            <p><strong class="text-sky-700">Cerumen & Glándulas:</strong> Secreción ceruminosa ácida rica en ácidos grasos y lisozima que atrapa detritos y repele insectos.</p>
+          </div>
+        </div>
+
+        <!-- Cadena de Huesecillos -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl">
+          <div class="flex items-center space-x-2 text-amber-700 mb-2">
+            <i class="fa-solid fa-link text-lg"></i>
+            <h4 class="font-bold text-slate-900 text-base">Cadena de Huesecillos</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Alojados en la cavidad timpánica conectando la membrana timpánica con la ventana oval del laberinto:
+          </p>
+          <div class="space-y-2 text-xs text-slate-700">
+            <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+              <span><strong>1. Martillo (Malleus):</strong> Mango adherido al ombligo timpánico.</span>
+              <span class="text-slate-600 font-mono text-[10px]">NC V3</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+              <span><strong>2. Yunque (Incus):</strong> Cuerpo y apófisis lenticular articular.</span>
+              <span class="text-slate-600 font-mono text-[10px]">Intermedio</span>
+            </div>
+            <div class="bg-slate-50 p-2 rounded-lg border border-slate-200 flex items-center justify-between">
+              <span><strong>3. Estribo (Stapes):</strong> Platina asentada en la ventana oval.</span>
+              <span class="text-slate-600 font-mono text-[10px]">NC VII</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Trompa de Eustaquio -->
+        <div class="bg-white border border-slate-200 p-5 rounded-2xl">
+          <div class="flex items-center space-x-2 text-rose-700 mb-2">
+            <i class="fa-solid fa-arrows-split-up-and-left text-lg"></i>
+            <h4 class="font-bold text-slate-900 text-base">Trompa Auditiva (de Eustaquio)</h4>
+          </div>
+          <p class="text-xs text-slate-600 leading-relaxed mb-3">
+            Conducto óseo-cartilaginoso que comunica la pared anterior de la caja timpánica con la <strong class="text-slate-800">nasofaringe</strong>.
+          </p>
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 text-xs text-slate-600 space-y-2">
+            <p><strong>Equilibrio Barométrico:</strong> Se abre pasivamente durante la deglución y el bostezo por tracción del músculo tensor del velo del paladar, igualando la presión entre la caja y la atmósfera exterior ($P_{\text{timpánica}} = P_{\text{atmosférica}}$).</p>
+            <p class="text-rose-700 font-semibold">Correlación Médica: En rinofaringitis, el edema ocluye la trompa, reabsorbiendo aire e induciendo retracción timpánica y otitis media serosa.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Biofísica de la Adaptación de Impedancias (Cálculo Físico) -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+        <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 mb-6">
+          <div>
+            <span class="text-xs font-bold text-amber-700 uppercase tracking-widest">Biofísica de los Sentidos</span>
+            <h3 class="text-xl font-bold text-slate-800">Mecanismo de Adaptación de Impedancias</h3>
+            <p class="text-xs text-slate-600 mt-1">
+              Si la onda sonora en el aire incidiera directamente sobre los líquidos cocleares, el $99.9\%$ de la energía acústica se reflejaría debido a la enorme diferencia de impedancia acústica ($Z_{\text{líquido}} \gg Z_{\text{aire}}$).
+            </p>
+          </div>
+          <div class="bg-slate-50 border border-amber-500/50 p-3 rounded-xl text-center">
+            <span class="text-[10px] text-slate-600 uppercase font-bold">Ganancia Total de Presión</span>
+            <p class="text-2xl font-black text-amber-700 font-mono">$\approx 22\times$</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Factor 1: Relación de Superficies -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-bold text-slate-800">1. Razón de Áreas (Tímpano : Ventana Oval)</h4>
+              <span class="text-xs bg-sky-50 text-sky-800 border border-sky-200 font-mono px-2 py-0.5 rounded">Factor $\approx 17\times$</span>
+            </div>
+            <p class="text-xs text-slate-600">
+              El área vibrátil efectiva de la membrana timpánica es de aproximadamente $55\,\text{mm}^2$, mientras que la platina del estribo en la ventana oval mide apenas $3.2\,\text{mm}^2$. Como la presión se define como:
+            </p>
+            <div class="p-2 bg-white rounded font-mono text-center text-xs text-sky-700">
+              $$P = \frac{F}{A} \implies \frac{P_{\text{oval}}}{P_{\text{tímpano}}} = \frac{A_{\text{tímpano}}}{A_{\text{oval}}} \approx \frac{55\,\text{mm}^2}{3.2\,\text{mm}^2} \approx 17.2$$
+            </div>
+            <p class="text-[11px] text-slate-600">Toda la fuerza colectada en la gran superficie timpánica se concentra en la reducida área de la ventana oval.</p>
+          </div>
+
+          <!-- Factor 2: Palanca de los Huesecillos -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+            <div class="flex items-center justify-between">
+              <h4 class="text-sm font-bold text-slate-800">2. Efecto Palanca Ósea</h4>
+              <span class="text-xs bg-amber-50 text-amber-800 border border-amber-200 font-mono px-2 py-0.5 rounded">Factor $\approx 1.3\times$</span>
+            </div>
+            <p class="text-xs text-slate-600">
+              La longitud del mango del martillo respecto al brazo largo del yunque actúa como una palanca mecánica de primer género con una ventaja mecánica de aproximadamente $1.3:1$:
+            </p>
+            <div class="p-2 bg-white rounded font-mono text-center text-xs text-amber-700">
+              $$\text{Ventaja Mecánica Total} = 17.2 \times 1.3 \approx 22.3$$
+            </div>
+            <p class="text-[11px] text-slate-600">Esta multiplicación de presión supera la impedancia de la perilinfa coclear permitiendo la transmisión eficiente del sonido.</p>
+          </div>
+        </div>
+
+        <!-- Reflejo Acústico Protector -->
+        <div class="mt-6 p-4 bg-slate-50 rounded-xl border border-rose-900/50 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="space-y-1">
+            <div class="flex items-center space-x-2 text-rose-700 text-xs font-bold uppercase">
+              <i class="fa-solid fa-volume-xmark"></i>
+              <span>Reflejo de Atenuación Acústica (Protección Coclear)</span>
+            </div>
+            <p class="text-xs text-slate-600">
+              Ante sonidos superiores a $80\text{--}85\,\text{dB}$, se contraen reflexivamente el <strong class="text-slate-800">músculo tensor del tímpano</strong> (inervado por NC V3) y el <strong class="text-slate-800">músculo del estribo</strong> (inervado por NC VII). Al rigidizar la cadena ósea, atenúan la transmisión de bajas frecuencias en $30\text{--}40\,\text{dB}$ protegiendo el órgano de Corti.
+            </p>
+          </div>
+          <button onclick="testAcousticReflex()" id="btnReflexTest" class="px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow whitespace-nowrap transition">
+            Simular Estímulo Lesivo (90 dB)
+          </button>
+        </div>
+      </div>
+    </section>
+      <section id="mod5" class="module-section hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-sky-600">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-sky-700 text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-ear-deaf"></i>
+              <span>Módulo 5 • Biofísica de la Audición II</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Oído Interno, Cóclea y Mecanotransducción de Corti</h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+              Gradientes iónicos únicos de la endolinfa ($\text{K}^+$ elevado), arquitectura de las tres rampas y activación de las células ciliadas.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Laberintos y Compartimentos Líquidos: Endolinfa vs Perilinfa -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center">
+          <i class="fa-solid fa-water text-sky-700 mr-2"></i>
+          Organización Laberíntica y Compartimentos Líquidos
+        </h3>
+        <p class="text-xs text-slate-600 mb-4">
+          El laberinto óseo alberga al laberinto membranoso. Las diferencias electroquímicas entre perilinfa y endolinfa son la fuerza motriz de la audición:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Perilinfa -->
+          <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-sky-500">
+            <div class="flex justify-between items-center mb-1">
+              <h4 class="text-sm font-bold text-slate-800">Perilinfa (Rampa Vestibular y Timpánica)</h4>
+              <span class="text-[10px] bg-sky-50 text-sky-800 border border-sky-200 font-mono px-2 py-0.5 rounded">Rica en $\text{Na}^+$</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Baña el espacio entre el laberinto óseo y el membranoso. Su composición es análoga al líquido extracelular y cefalorraquídeo:
+            </p>
+            <div class="mt-2 p-2 bg-white rounded font-mono text-xs text-slate-600 flex justify-around">
+              <span>$[\text{Na}^+] \approx 140\,\text{mEq/L}$</span>
+              <span>$[\text{K}^+] \approx 4\text{--}5\,\text{mEq/L}$</span>
+              <span>Potencial $\approx 0\,\text{mV}$</span>
+            </div>
+          </div>
+
+          <!-- Endolinfa -->
+          <div class="bg-slate-50 p-4 rounded-xl border-l-4 border-amber-500">
+            <div class="flex justify-between items-center mb-1">
+              <h4 class="text-sm font-bold text-slate-800">Endolinfa (Rampa Media / Conducto Coclear)</h4>
+              <span class="text-[10px] bg-amber-50 text-amber-800 border border-amber-200 font-mono px-2 py-0.5 rounded">Rica en $\text{K}^+$</span>
+            </div>
+            <p class="text-xs text-slate-600 leading-relaxed">
+              Secretada activamente por la <strong>estría vascular</strong>. Presenta una concentración iónica semejante al citosol celular pero con carga positiva extracelular:
+            </p>
+            <div class="mt-2 p-2 bg-white rounded font-mono text-xs text-amber-700 flex justify-around">
+              <span>$[\text{K}^+] \approx 150\,\text{mEq/L}$</span>
+              <span>$[\text{Na}^+] \approx 2\,\text{mEq/L}$</span>
+              <span>$V_{\text{endococlear}} \approx +80\,\text{mV}$</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-4 p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-600">
+          <strong class="text-slate-800">Gradiente Transmembrana Excepcional:</strong> El interior de la célula ciliada tiene un potencial de $-45\text{--}-70\,\text{mV}$ mientras la endolinfa apical está a $+80\,\text{mV}$. La diferencia de potencial eléctrico a través de la membrana apical es de <span class="text-amber-700 font-bold font-mono">$\Delta V \approx 140\text{--}150\,\text{mV}$</span>, impulsando vigorosamente el ingreso de $\text{K}^+$ apenas se abren mecánicamente los canales.
+        </div>
+      </div>
+
+      <!-- Las Tres Rampas Cocleares & Tonotopía -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl">
+        <h3 class="text-lg font-bold text-slate-900 mb-2 flex items-center">
+          <i class="fa-solid fa-shapes text-amber-700 mr-2"></i>
+          Arquitectura de las Tres Rampas Cocleares
+        </h3>
+        <p class="text-xs text-slate-600 mb-4">
+          La cóclea gira $2.5\text{--}2.75$ vueltas alrededor de un eje óseo central (columela o modiolo), dividida longitudinalmente en 3 canales:
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <span class="text-[10px] text-sky-700 font-mono uppercase font-bold block mb-1">Rampa Superior</span>
+            <h4 class="font-bold text-slate-900 text-sm">Rampa Vestibular</h4>
+            <p class="text-slate-600 mt-1">
+              Contiene perilinfa. Inicia en la <strong>ventana oval</strong> (donde impacta la platina del estribo) y asciende hasta el vértice coclear.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <span class="text-[10px] text-amber-700 font-mono uppercase font-bold block mb-1">Rampa Intermedia</span>
+            <h4 class="font-bold text-slate-900 text-sm">Rampa Media (Conducto Coclear)</h4>
+            <p class="text-slate-600 mt-1">
+              Contiene endolinfa. Delimitada arriba por la <strong>membrana de Reissner</strong> y abajo por la <strong>membrana basilar</strong>. Contiene al <strong>Órgano de Corti</strong>.
+            </p>
+          </div>
+
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200">
+            <span class="text-[10px] text-sky-700 font-mono uppercase font-bold block mb-1">Rampa Inferior</span>
+            <h4 class="font-bold text-slate-900 text-sm">Rampa Timpánica</h4>
+            <p class="text-slate-600 mt-1">
+              Contiene perilinfa. Se comunica en el vértice con la vestibular a través del <strong>helicotrema</strong> y termina en la <strong>ventana redonda</strong> disipando la presión.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIMULADOR INTERACTIVO DEL ÓRGANO DE CORTI Y TIP LINKS -->
+      <div class="bg-white border border-slate-200 p-6 rounded-2xl shadow-xl">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-200 gap-3">
+          <div>
+            <div class="flex items-center space-x-2 text-sky-700 text-xs font-bold uppercase tracking-wider">
+              <i class="fa-solid fa-microscope"></i>
+              <span>Simulador Celular Interactivo</span>
+            </div>
+            <h3 class="text-lg font-bold text-slate-800">Transducción Mecanoeléctrica en la Célula Ciliada</h3>
+          </div>
+
+          <!-- Controls for acoustic wave -->
+          <div class="flex items-center space-x-2">
+            <button onclick="triggerCiliaDeflection('towards')" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition flex items-center">
+              <i class="fa-solid fa-arrow-right mr-1"></i>Deflexión hacia Quinocilio (Despolariza)
+            </button>
+            <button onclick="triggerCiliaDeflection('away')" class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-xs font-bold transition flex items-center">
+              <i class="fa-solid fa-arrow-left mr-1"></i>Deflexión Opuesta (Hiperpolariza)
+            </button>
+          </div>
+        </div>
+
+        <!-- Canvas of Hair Cell & Tip Links -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+          <div class="lg:col-span-2 bg-slate-50 rounded-xl border border-slate-200 p-2 flex flex-col items-center">
+            <canvas id="cortiCanvas" class="w-full h-80 block bg-slate-50 rounded-xl border border-slate-200"></canvas>
+            <div class="flex justify-between w-full text-[11px] text-slate-600 px-3 py-1">
+              <span>Polo Apical: Bañado en Endolinfa ($\text{K}^+$ alto)</span>
+              <span>Polo Basolateral: Bañado en Perilinfa</span>
+            </div>
+          </div>
+
+          <!-- Status readouts of the hair cell -->
+          <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col justify-between">
+            <div class="space-y-4">
+              <span class="text-xs font-bold text-slate-600 uppercase tracking-widest block">Estado Bioeléctrico de la Célula Ciliada</span>
+
+              <div class="bg-white p-3 rounded-xl border border-slate-200 text-center">
+                <span class="text-[10px] text-slate-600 uppercase">Potencial Intracelular</span>
+                <p id="hairCellVm" class="text-2xl font-black text-emerald-700 font-mono">-55 mV</p>
+                <span id="hairCellState" class="text-xs text-emerald-700 font-semibold">Tono Basal en Reposo</span>
+              </div>
+
+              <div class="space-y-2 text-xs">
+                <div class="p-2 bg-white rounded border border-slate-200 flex justify-between">
+                  <span class="text-slate-600">Canales MET (Tip-Links):</span>
+                  <strong id="hairCellMetStatus" class="text-emerald-700 font-mono">15% Abiertos (Basal)</strong>
+                </div>
+                <div class="p-2 bg-white rounded border border-slate-200 flex justify-between">
+                  <span class="text-slate-600">Influjo de $\text{K}^+$ apical:</span>
+                  <strong id="hairCellKStatus" class="text-slate-600 font-mono">Moderado</strong>
+                </div>
+                <div class="p-2 bg-white rounded border border-slate-200 flex justify-between">
+                  <span class="text-slate-600">Canales de $\text{Ca}^{2+}$ voltaje-dep.:</span>
+                  <strong id="hairCellCaStatus" class="text-slate-600 font-mono">Cerrados</strong>
+                </div>
+                <div class="p-2 bg-white rounded border border-slate-200 flex justify-between">
+                  <span class="text-slate-600">Descarga en Nervio Coclear:</span>
+                  <strong id="hairCellSpikeStatus" class="text-slate-600 font-mono">Frecuencia Basal</strong>
+                </div>
+              </div>
+            </div>
+
+            <!-- Difference: CCI vs CCE -->
+            <div class="mt-4 pt-3 border-t border-slate-200 text-[11px] text-slate-600">
+              <strong class="text-slate-900 block mb-1">Células Ciliadas Internas vs Externas:</strong>
+              • <strong>CCI (1 fila):</strong> $90\text{--}95\%$ de las fibras aferentes auditivas primarias.
+              <br>• <strong>CCE (3 filas):</strong> Electromotilidad por proteína <em>prestina</em> ("amplificador coclear").
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+      <section id="modQuiz" class="module-section hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 border-l-4 border-l-amber-600">
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          <div>
+            <div class="flex items-center space-x-2 text-amber-700 text-xs font-semibold tracking-wider uppercase mb-1">
+              <i class="fa-solid fa-graduation-cap"></i>
+              <span>Simulador de Examen de Admisión • Facultad de Ciencias Médicas UCCuyo</span>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-800">Evaluación Sumativa de Fisiología Sensorial</h2>
+            <p class="text-sm text-slate-600 mt-1 max-w-3xl">
+              Banco de preguntas de opción múltiple estructurado bajo los estándares de ingreso a Medicina. Retroalimentación fisiológica y justificación teórica instantánea.
+            </p>
+          </div>
+          <div class="bg-white border border-amber-600/40 p-3 rounded-xl text-center">
+            <span class="text-[10px] text-slate-600 uppercase font-bold">Puntaje Obtenido</span>
+            <p id="quizScoreDisplay" class="text-2xl font-black text-amber-700 font-mono">0 / 5</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Questions Container -->
+      <div class="space-y-4" id="quizContainer">
+        <!-- Rendered dynamically by initQuiz() -->
+      </div>
+
+      <!-- Action reset bar -->
+      <div class="flex justify-end pt-4">
+        <button onclick="resetQuiz()" class="px-6 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 font-bold text-xs rounded-xl shadow transition flex items-center">
+          <i class="fa-solid fa-rotate-right mr-2"></i>Reiniciar Autoevaluación
+        </button>
+      </div>
+    </section>
+    </div>
+
+  </main>
+
+  <!-- Pie de Página Institucional -->
+  <footer class="bg-white border-t border-gray-200 py-3 text-center text-xs text-gray-500 font-medium">
+    Desarrollado por vesalio - Todos los derechos reservados
+  </footer>
+
+  <!-- Modal: Vademécum Teórico Neurofisiológico -->
+  <div id="modal-formulas" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white max-w-3xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-accent p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-book-bookmark text-xl"></i>
+          <h3 class="font-bold text-base">Vademécum Teórico: Principios y Fórmulas Biofísicas Sensoriales</h3>
+        </div>
+        <button onclick="closeFormulasModal()" class="text-white hover:text-gray-200 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto space-y-6 text-xs md:text-sm text-gray-700 custom-scroll leading-relaxed">
+        
+        <!-- 1. Óptica y Refracción Ocular -->
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-eye"></i> 1. Óptica y Refracción Ocular
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-col justify-between">
+              <div>
+                <strong class="text-slate-800 font-bold block mb-2">Poder Dióptrico Total:</strong>
+                <div class="text-center py-2 text-sm text-slate-800 font-mono">
+                  $D = \frac{1}{f\,\text{(m)}} \approx +59\text{ a }+60\text{ D}$
+                </div>
+              </div>
+              <p class="text-gray-600 text-[11px] mt-2 border-t border-gray-200 pt-2">
+                <strong>Córnea:</strong> $+43\text{ D}$ (fija) &nbsp;|&nbsp; <strong>Cristalino:</strong> $+15\text{ a }+19\text{ D}$ (acomodable).
+              </p>
+            </div>
+            
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-col justify-between">
+              <div>
+                <strong class="text-slate-800 font-bold block mb-2">Presión Intraocular Normal (PIO):</strong>
+                <div class="text-center py-2 text-sm text-slate-800 font-mono">
+                  $\text{PIO} = 10\text{--}21\text{ mmHg}$
+                </div>
+              </div>
+              <p class="text-gray-600 text-[11px] mt-2 border-t border-gray-200 pt-2">
+                Equilibrio entre síntesis en procesos ciliares y drenaje trabecular por el <strong>Canal de Schlemm</strong>.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Biofísica de la Fototransducción -->
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-bolt"></i> 2. Biofísica de la Fototransducción (Paradoja)
+          </h4>
+          <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 space-y-3 text-xs text-gray-700">
+            <div class="bg-white p-3 rounded-lg border border-gray-200">
+              <strong class="text-amber-800 font-bold block mb-1">
+                <i class="fa-solid fa-moon mr-1"></i> En la Oscuridad (Despolarización Basal):
+              </strong>
+              <p class="mb-1 text-slate-700">
+                $[\text{GMPc}]$ citosólico elevado $\implies$ apertura de canales de $\text{Na}^+$ y $\text{Ca}^{2+}$ ("corriente oscura").
+              </p>
+              <div class="font-mono text-center py-1 text-amber-800 font-bold bg-amber-50 rounded border border-amber-200">
+                $V_m \approx -40\text{ mV} \implies \text{Liberación tónica continua de Glutamato (inhibidor)}$
+              </div>
+            </div>
+
+            <div class="bg-white p-3 rounded-lg border border-gray-200">
+              <strong class="text-sky-800 font-bold block mb-1">
+                <i class="fa-solid fa-sun mr-1"></i> Ante la Luz (Hiperpolarización Activa):
+              </strong>
+              <p class="mb-1 text-slate-700">
+                Fotón absorbido $\implies$ activación de rodopsina $\implies$ estimula transducina $\to$ activa fosfodiesterasa (PDE) $\implies$ degradación de $\text{GMPc}$ $\implies$ cierre de canales CNG.
+              </p>
+              <div class="font-mono text-center py-1 text-sky-800 font-bold bg-sky-50 rounded border border-sky-200">
+                $V_m \approx -70\text{ mV} \implies \text{Cese de liberación de Glutamato (desinhibición celular)}$
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Mecánica Acústica y Gradientes Iónicos Cocleares -->
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-ear-listen"></i> 3. Mecánica Acústica y Gradientes Iónicos Cocleares
+          </h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs">
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-col justify-between">
+              <div>
+                <strong class="text-slate-800 font-bold block mb-1">Relación Tímpano-Ventana Oval:</strong>
+                <div class="text-center py-2 text-sm text-slate-800 font-mono">
+                  $\text{Presión} = \frac{F}{A} \implies \text{Ganancia } \approx 17\text{--}20\times$
+                </div>
+              </div>
+              <p class="text-gray-600 text-[11px] mt-2 border-t border-gray-200 pt-2">
+                Compensa la diferencia de impedancia acústica entre el aire externo y la perilinfa coclear.
+              </p>
+            </div>
+            
+            <div class="p-4 bg-gray-50 rounded-xl border border-gray-200 flex flex-col justify-between">
+              <div>
+                <strong class="text-slate-800 font-bold block mb-1">Composición Iónica Coclear:</strong>
+                <div class="py-1 text-xs text-slate-800 font-mono space-y-1">
+                  <div class="p-1.5 bg-amber-50 rounded border border-amber-200 text-amber-900">
+                    <strong>Endolinfa (Rampa Media):</strong> $[\text{K}^+] \approx 150\text{ mM}$, $[\text{Na}^+] \downarrow$
+                  </div>
+                  <div class="p-1.5 bg-sky-50 rounded border border-sky-200 text-sky-900">
+                    <strong>Perilinfa (Vestib./Timp.):</strong> $[\text{Na}^+] \approx 140\text{ mM}$, $[\text{K}^+] \downarrow$
+                  </div>
+                </div>
+              </div>
+              <p class="text-gray-600 text-[11px] mt-2 border-t border-gray-200 pt-2">
+                La alta concentración de $\text{K}^+$ endolinfático permite la entrada electroquímica rápida al estereocilio.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="bg-gray-50 p-4 border-t border-gray-200 flex justify-end">
+        <button onclick="closeFormulasModal()" class="px-5 py-2 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover text-xs transition shadow-sm">
+          Cerrar Vademécum
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: Guía de Uso del Simulador -->
+  <div id="modal-tutorial" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center hidden p-4">
+    <div class="bg-white max-w-4xl w-full rounded-2xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="bg-accent p-4 text-white flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-circle-question text-xl"></i>
+          <h3 class="font-bold text-base">Guía Integral de Uso del Simulador | Biología Médica UCCuyo</h3>
+        </div>
+        <button onclick="closeTutorial()" class="text-white hover:text-gray-200 transition">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+      
+      <div class="p-6 overflow-y-auto space-y-6 text-xs md:text-sm text-gray-700 custom-scroll leading-relaxed">
+        
+        <!-- Sección 1: Propósito -->
+        <div class="border-b border-gray-100 pb-4">
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-bullseye"></i> 1. Propósito Tecnopedagógico
+          </h4>
+          <p class="text-gray-600">
+            Este simulador interactivo está concebido como una herramienta de apoyo al estudio para los aspirantes al <strong>Curso de Ingreso a la Carrera de Medicina (Facultad de Ciencias Médicas - Universidad Católica de Cuyo)</strong>. Su objetivo es modelar visual y biofísicamente los conceptos fundamentales de la <em>neurofisiología sensorial, óptica ocular, fototransducción, transducción mecanoeléctrica coclear y vías aferentes especiales</em>.
+          </p>
+        </div>
+
+        <!-- Sección 2: Guía de Módulos y Herramientas -->
+        <div class="border-b border-gray-100 pb-4">
+          <h4 class="font-bold text-accent text-sm mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-layer-group"></i> 2. Guía Detallada de Módulos y Simuladores
+          </h4>
+          
+          <div class="space-y-4 text-gray-600">
+            <!-- Mod 1 -->
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong class="text-accent flex items-center gap-1.5 mb-1 text-xs sm:text-sm">
+                <i class="fa-solid fa-diagram-project"></i> Módulo 1: Eslabón Funcional Universal & Anexos Oculares
+              </strong>
+              <p class="mb-1.5">
+                • <strong>Eslabón Universal:</strong> Haz clic en cada uno de los 4 bloques interactivos para desglosar la secuencia biológica: <em>Estímulo físico específico $	o$ Potencial receptor $	o$ Potencial de acción aferente $	o$ Decodificación cortical</em>.<br>
+                • <strong>Aparato Lagrimal & Músculos Extrínsecos:</strong> Pulsa los botones de correlación clínica (epífora, parálisis de los pares craneales $	ext{III}$, $	ext{IV}$ y $	ext{VI}$) para desplegar las fichas de patología aplicada.
+              </p>
+            </div>
+
+            <!-- Mod 2 -->
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong class="text-accent flex items-center gap-1.5 mb-1 text-xs sm:text-sm">
+                <i class="fa-solid fa-eye"></i> Módulo 2: Anatomía, Humor Acuoso & Óptica Ocular
+              </strong>
+              <p class="mb-1.5">
+                • <strong>Reflejo Pupilar Fotomotor y Consensual:</strong> Alterna los botones de <em>Luz Intensa</em> ($	ext{miosis}$ parasimpática por el $	ext{NC III}$) y <em>Penumbra / Estrés</em> ($	ext{midriasis}$ simpática) para ver en tiempo real la apertura pupilar y el diámetro milimétrico.<br>
+                • <strong>Dinámica del Humor Acuoso & Glaucoma:</strong> Analiza la ruta de síntesis en el cuerpo ciliar, paso por la cámara anterior y drenaje en el canal de Schlemm, junto con la correlación de presión intraocular ($	ext{PIO} = 10	ext{--}21,	ext{mmHg}$).<br>
+                • <strong>Simulador Óptico & Tríada de Acomodación:</strong> Mueve el control deslizante de distancia de enfoque ($0.2	ext{--}6.0,	ext{m}$) y conmuta entre <em>Acomodación Activa</em> (músculo ciliar contraído, zónula relajada, cristalino abombado $+19,	ext{D}$) y <em>Relajada</em> ($+15,	ext{D}$). Observa en el <strong>Canvas 2D</strong> el trazado físico de los rayos y la formación de la imagen real e invertida sobre la fóvea.
+              </p>
+            </div>
+
+            <!-- Mod 3 -->
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong class="text-accent flex items-center gap-1.5 mb-1 text-xs sm:text-sm">
+                <i class="fa-solid fa-sun"></i> Módulo 3: Retina, Fototransducción & Vía Visual
+              </strong>
+              <p class="mb-1.5">
+                • <strong>Simulador Bioquímico (Luz vs. Oscuridad):</strong> Alterna el interruptor para estudiar la <em>paradoja de la hiperpolarización</em>. En penumbra observarás la corriente oscura de $	ext{Na}^+$, $[	ext{GMPc}]$ alto y $V_m approx -40,	ext{mV}$; al encender la luz verás la cascada de rodopsina $	o$ transducina $	o$ fosfodiesterasa, el cierre de canales CNG, hiperpolarización a $-70,	ext{mV}$ y cese de glutamato.<br>
+                • <strong>Conos vs. Bastones:</strong> Tabla interactiva de contrastes funcionales (visión escotópica vs. fotópica/cromática con fotopsinas $	ext{S}$, $	ext{M}$ y $	ext{L}$).<br>
+                • <strong>Campimetría & Decusación Quiasmática:</strong> Simula lesiones en el nervio óptico, el centro del quiasma óptico (hemianoopsia bitemporal) o la cintilla óptica ipsilateral con el visualizador en Canvas.
+              </p>
+            </div>
+
+            <!-- Mod 4 -->
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong class="text-accent flex items-center gap-1.5 mb-1 text-xs sm:text-sm">
+                <i class="fa-solid fa-ear-listen"></i> Módulo 4: Oído Externo, Medio & Amplificación
+              </strong>
+              <p class="mb-1.5">
+                • <strong>Adaptación de Impedancias:</strong> Explora cómo la relación de áreas entre la membrana timpánica y la ventana oval ($approx 17	ext{--}20	imes$), combinada con la palanca ósea martillo-yunque ($1.3	imes$), logra una ganancia de presión de $approx 22$ veces para transferir la vibración aérea al líquido coclear.<br>
+                • <strong>Reflejo de Protección Acústica:</strong> Presiona el botón de prueba para activar la contracción refleja de los músculos del estribo y tensor del tímpano ante intensidades lesivas ($>80,	ext{dB}$).<br>
+                • <strong>Trompa de Eustaquio:</strong> Mecanismo de compensación de presión barométrica nasofaríngea y disfunción tubárica.
+              </p>
+            </div>
+
+            <!-- Mod 5 -->
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong class="text-accent flex items-center gap-1.5 mb-1 text-xs sm:text-sm">
+                <i class="fa-solid fa-wave-square"></i> Módulo 5: Cóclea, Gradientes Iónicos & Órgano de Corti
+              </strong>
+              <p class="mb-1.5">
+                • <strong>Compartimentos Líquidos:</strong> Comparativa de la perilinfa rica en $	ext{Na}^+$ (rampas vestibular y timpánica) y la endolinfa rica en $	ext{K}^+$ ($150,	ext{mM}$) del conducto coclear.<br>
+                • <strong>Mecanotransducción Ciliar (Canvas Interactivo):</strong> Deflexiona los estereocilios hacia el cinocilio para provocar la tensión de los enlaces de la punta (*tip links*), apertura de canales MET, entrada de $	ext{K}^+$, despolarización a $-35,	ext{mV}$ y liberación sináptica hacia el $	ext{NC VIII}$; o bien hacia el lado opuesto para registrar la hiperpolarización basófila.
+              </p>
+            </div>
+
+            <!-- Mod 6 -->
+            <div class="p-3 bg-gray-50 rounded-xl border border-gray-200">
+              <strong class="text-accent flex items-center gap-1.5 mb-1 text-xs sm:text-sm">
+                <i class="fa-solid fa-graduation-cap"></i> Módulo 6: Examen Integrador de Ingreso
+              </strong>
+              <p>
+                Cuestionario formativo de opción múltiple estructurado bajo la modalidad del examen de admisión de Ciencias Médicas. Cada respuesta brinda fundamentación justificada inmediata, contador de puntaje acumulado y posibilidad de reintento.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección 3: Vademécum y Fórmulas -->
+        <div class="border-b border-gray-100 pb-4">
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-book-bookmark"></i> 3. Botón "Vademécum Teórico"
+          </h4>
+          <p class="text-gray-600">
+            Situado en la cabecera superior, este panel emergente reúne en formato sintético todas las fórmulas biofísicas, rangos fisiológicos normales ($	ext{PIO}$, dioptrías, voltajes de reposo y umbrales de audición) y gradientes químicos de referencia rápida durante las prácticas.
+          </p>
+        </div>
+
+        <!-- Sección 4: Consejos de Estudio -->
+        <div>
+          <h4 class="font-bold text-accent text-sm mb-1 flex items-center gap-2">
+            <i class="fa-solid fa-lightbulb"></i> 4. Recomendación para los Aspirantes a Medicina
+          </h4>
+          <p class="text-gray-600">
+            Se sugiere recorrer los módulos en orden progresivo: primero comprender la transformación de energía en el receptor, luego la biofísica de las lentes ópticas y el oído medio, para finalmente dominar las cascadas intracelulares moleculares de la retina y la cóclea antes de rendir la autoevaluación sumativa.
+          </p>
+        </div>
+
+      </div>
+
+      <div class="bg-gray-50 p-4 border-t border-gray-200 flex justify-end">
+        <button onclick="closeTutorial()" class="px-5 py-2 bg-accent text-white font-semibold rounded-lg hover:bg-accent-hover text-xs transition shadow-sm">
+          ¡Entendido, Comenzar a Estudiar!
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 hidden max-w-md bg-white border border-accent text-gray-800 p-4 rounded-xl shadow-xl backdrop-blur transform transition-all duration-300">
+    <div class="flex items-start space-x-3">
+      <div id="toastIcon" class="text-accent text-lg mt-0.5"><i class="fa-solid fa-circle-info"></i></div>
+      <div class="flex-1">
+        <h4 id="toastTitle" class="text-xs font-bold uppercase tracking-wider text-accent">Correlación Fisiológica</h4>
+        <p id="toastBody" class="text-xs text-gray-600 mt-1 leading-relaxed">Mensaje dinámico informativo.</p>
+      </div>
+      <button onclick="hideToast()" class="text-gray-400 hover:text-gray-600"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // STATE MANAGEMENT
+    // -------------------------------------------------------------
+    const appState = {
+      activeTab: 'mod1',
+      selectedEslabon: 1,
+      pupilState: 'dark', // 'dark' | 'light'
+      photoState: 'dark', // 'dark' | 'light'
+      optics: {
+        condition: 'emmetropia',
+        distance: 5.0, // meters
+        isAccommodating: false
+      },
+      visualLesion: 'normal',
+      corti: {
+        deflection: 0, // -1 (away/hiper), 0 (rest), +1 (towards/desp)
+        animFrame: null
+      },
+      quizAnswers: {}
+    };
+
+    // -------------------------------------------------------------
+    // TAB SWITCHING SYSTEM
+    // -------------------------------------------------------------
+    function switchTab(tabId) {
+      appState.activeTab = tabId;
+
+      // Hide all sections
+      document.querySelectorAll('.module-section').forEach(sec => {
+        sec.classList.add('hidden');
+      });
+
+      // Show selected section
+      const targetSec = document.getElementById(tabId);
+      if (targetSec) targetSec.classList.remove('hidden');
+
+      // Update Nav Buttons
+      document.querySelectorAll('#navTabs .nav-btn').forEach(btn => {
+        const isQuiz = btn.getAttribute('data-tab') === 'modQuiz';
+        const borderClass = isQuiz ? ' border-t lg:border-t border-gray-100' : '';
+        if (btn.getAttribute('data-tab') === tabId) {
+          btn.className = "nav-btn bg-accent text-white flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-semibold transition shadow-sm flex items-center gap-2" + borderClass;
+        } else {
+          btn.className = "nav-btn text-gray-700 hover:bg-gray-100 flex-1 lg:flex-none text-left py-2.5 px-4 rounded-xl text-xs sm:text-sm font-medium transition flex items-center gap-2" + borderClass;
+        }
+      });
+
+      // Rerender KaTeX math formulas in the freshly opened tab
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+
+      // Trigger respective canvas resizes & redraws
+      if (tabId === 'mod2') {
+        setTimeout(initOpticsCanvas, 50);
+      } else if (tabId === 'mod3') {
+        setTimeout(initPathwayCanvas, 50);
+      } else if (tabId === 'mod5') {
+        setTimeout(initCortiCanvas, 50);
+      }
+    }
+
+    function toggleMobileNav() {
+      const mob = document.getElementById('mobileNav');
+      mob.classList.toggle('hidden');
+    }
+
+    // -------------------------------------------------------------
+    // TOAST NOTIFICATION UTILITY (NO browser alert())
+    // -------------------------------------------------------------
+    function showQuickFact(title, body) {
+      const toast = document.getElementById('toastNotification');
+      document.getElementById('toastTitle').textContent = title;
+      document.getElementById('toastBody').textContent = body;
+      toast.classList.remove('hidden');
+
+      if (window.toastTimeout) clearTimeout(window.toastTimeout);
+      window.toastTimeout = setTimeout(() => {
+        hideToast();
+      }, 7000);
+    }
+
+    function hideToast() {
+      document.getElementById('toastNotification').classList.add('hidden');
+    }
+
+    // -------------------------------------------------------------
+    // MODULE 1: ESLABÓN FUNCIONAL INTERACTIVO
+    // -------------------------------------------------------------
+    const eslabonesData = {
+      1: {
+        title: "1. Estímulo Físico Específico (Adecuado)",
+        content: `
+          <p class="mb-2">Cada órgano de los sentidos se encuentra filogenéticamente adaptado para captar una forma particular de energía con el umbral biofísico más bajo posible:</p>
+          <ul class="space-y-1.5 list-disc list-inside text-slate-700">
+            <li><strong>Fotorreceptores (Visión):</strong> Espectro electromagnético visible entre $\\lambda = 400\\text{--}700\\,\\text{nm}$ (radiación cuántica de fotones).</li>
+            <li><strong>Fonorreceptores (Audición):</strong> Ondas mecánicas longitudinales de presión acústica transmitidas por oscilaciones moleculares en el medio aéreo ($20\\text{--}20000\\,\\text{Hz}$).</li>
+          </ul>
+        `
+      },
+      2: {
+        title: "2. Transducción a Potencial Receptor (Graduado)",
+        content: `
+          <p class="mb-2">La energía física recibida modifica la permeabilidad de canales iónicos de membrana, produciendo un <strong>cambio local de potencial de membrana</strong>:</p>
+          <ul class="space-y-1.5 list-disc list-inside text-slate-700">
+            <li><strong>No sigue la ley del 'todo o nada':</strong> Su amplitud y duración varían gradualmente en función exacta de la intensidad del estímulo físico.</li>
+            <li><strong>Propagación electrotónica decaíble:</strong> No es regenerativo, viaja pasivamente a distancias cortas hacia la zona de disparo neuronal.</li>
+            <li><em>Particularidad Retiniana:</em> Los fotorreceptores responden con una <strong>hiperpolarización</strong> graduada en lugar de una despolarización típica.</li>
+          </ul>
+        `
+      },
+      3: {
+        title: "3. Generación y Propagación de Potenciales de Acción",
+        content: `
+          <p class="mb-2">Si el potencial generador supera el umbral despolarizante en el segmento inicial del axón:</p>
+          <ul class="space-y-1.5 list-disc list-inside text-slate-700">
+            <li>Se abren sincrónicamente canales de $\\text{Na}^+$ voltaje-dependientes.</li>
+            <li>La intensidad del estímulo <strong>se codifica en frecuencia de disparo</strong> (tren de impulsos o $\\text{Hz}$), jamás en amplitud del potencial de acción.</li>
+            <li>Conducción axonal a larga distancia a través de nervios craneales mielinizados (Nervio Óptico NC II y Nervio Vestibulococlear NC VIII).</li>
+          </ul>
+        `
+      },
+      4: {
+        title: "4. Integración, Relevo Talámico y Percepción Cortical",
+        content: `
+          <p class="mb-2">El mensaje aferente viaja por tractos especializados hacia el encéfalo:</p>
+          <ul class="space-y-1.5 list-disc list-inside text-slate-700">
+            <li><strong>Filtro y Relevo Talámico:</strong> Cuerpo geniculado lateral (vía visual) y cuerpo geniculado medial (vía auditiva).</li>
+            <li><strong>Corteza Primaria:</strong> Corteza visual primaria (área 17 en lóbulos occipitales, cisura calcarina) y corteza auditiva primaria (áreas 41 y 42 en giros transversos de Heschl, lóbulo temporal).</li>
+            <li><strong>Áreas de Asociación:</strong> Otorgan significado cognitivo y reconocimiento mnémico a la sensación.</li>
+          </ul>
+        `
+      }
+    };
+
+    function selectEslabon(id) {
+      appState.selectedEslabon = id;
+
+      // Update card styles
+      for (let i = 1; i <= 4; i++) {
+        const card = document.getElementById(`eslabon-card-${i}`);
+        if (i === id) {
+          card.className = "cursor-pointer bg-white hover:bg-slate-50 border-2 border-sky-500 p-4 rounded-xl transition duration-200 relative group shadow-md";
+        } else {
+          card.className = "cursor-pointer bg-white hover:bg-slate-50 border border-slate-700/80 p-4 rounded-xl transition duration-200 relative group";
+        }
+      }
+
+      // Render content
+      const detailBox = document.getElementById('eslabonDetailBox');
+      const data = eslabonesData[id];
+      detailBox.innerHTML = `
+        <h4 class="font-bold text-sky-700 text-sm mb-2 flex items-center">
+          <i class="fa-solid fa-circle-info mr-2"></i>${data.title}
+        </h4>
+        <div class="text-xs text-slate-700">${data.content}</div>
+      `;
+
+      if (window.renderMathInElement) {
+        renderMathInElement(detailBox, {
+          delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]
+        });
+      }
+    }
+
+    // -------------------------------------------------------------
+    // MODULE 2: DINÁMICA PUPILAR & ÓPTICA
+    // -------------------------------------------------------------
+    function setPupilState(state) {
+      appState.pupilState = state;
+      const iris = document.getElementById('irisVisual');
+      const pupil = document.getElementById('pupilAperture');
+      const statusLabel = document.getElementById('pupilStatusLabel');
+      const autonomicLabel = document.getElementById('pupilAutonomicLabel');
+      const diameterText = document.getElementById('pupilDiameterText');
+
+      if (state === 'light') {
+        // Miosis
+        iris.classList.add('scale-105');
+        pupil.className = "w-5 h-5 rounded-full bg-white transition-all duration-500 flex items-center justify-center shadow-inner";
+        statusLabel.textContent = "Luz Intensa: Reflejo Fotomotor";
+        statusLabel.className = "text-xs font-bold text-rose-700 uppercase tracking-widest";
+        autonomicLabel.textContent = "Parasimpático (NC III) • Miosis";
+        diameterText.innerHTML = "Diámetro pupilar: $1.8\\,\\text{mm}$ (Contracción Esfínter)";
+      } else {
+        // Midriasis / Basal
+        iris.classList.remove('scale-105');
+        pupil.className = "w-14 h-14 rounded-full bg-white transition-all duration-500 flex items-center justify-center shadow-inner";
+        statusLabel.textContent = "Penumbra Basal: Tono Relajado";
+        statusLabel.className = "text-xs font-bold text-amber-700 uppercase tracking-widest";
+        autonomicLabel.textContent = "Simpático • Midriasis";
+        diameterText.innerHTML = "Diámetro pupilar: $5.0\\,\\text{mm}$ (Contracción Dilatador)";
+      }
+
+      if (window.renderMathInElement) {
+        renderMathInElement(diameterText, {
+          delimiters: [{left: '$', right: '$', display: false}]
+        });
+      }
+    }
+
+    // Interactive Ray Tracing Canvas Simulation
+    function onObjectDistChange(val) {
+      appState.optics.distance = parseFloat(val);
+      const label = document.getElementById('objDistLabel');
+      if (appState.optics.distance < 1.0) {
+        label.textContent = `${Math.round(appState.optics.distance * 100)} cm (Visión Muy Cercana)`;
+      } else {
+        label.textContent = `${appState.optics.distance.toFixed(1)} metros (${appState.optics.distance >= 5.0 ? 'Visión Lejana' : 'Distancia Intermedia'})`;
+      }
+
+      // Auto accommodation suggestion
+      if (appState.optics.distance < 1.5 && !appState.optics.isAccommodating) {
+        setAccommodateMode(true);
+      } else if (appState.optics.distance >= 5.0 && appState.optics.isAccommodating) {
+        setAccommodateMode(false);
+      } else {
+        drawOptics();
+      }
+    }
+
+    function setAccommodateMode(isAcc) {
+      appState.optics.isAccommodating = isAcc;
+      const btnRelajado = document.getElementById('btnAccomRelajado');
+      const btnActivo = document.getElementById('btnAccomActivo');
+      const ciliaryLabel = document.getElementById('ciliaryStateLabel');
+
+      if (isAcc) {
+        btnActivo.className = "flex-1 py-1.5 px-3 bg-amber-600 text-white rounded-lg text-xs font-semibold shadow";
+        btnRelajado.className = "flex-1 py-1.5 px-3 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg text-xs font-semibold";
+        ciliaryLabel.textContent = "Contraído (Zónula Laja / Cristalino Abombado)";
+        ciliaryLabel.className = "text-amber-700 font-mono font-bold";
+      } else {
+        btnRelajado.className = "flex-1 py-1.5 px-3 bg-sky-600 text-white rounded-lg text-xs font-semibold shadow";
+        btnActivo.className = "flex-1 py-1.5 px-3 bg-slate-100 text-slate-600 hover:bg-slate-200 rounded-lg text-xs font-semibold";
+        ciliaryLabel.textContent = "Relajado (Zónula Tensa / Cristalino Aplanado)";
+        ciliaryLabel.className = "text-sky-700 font-mono font-bold";
+      }
+      drawOptics();
+    }
+
+    function updateOpticsSimulation() {
+      appState.optics.condition = document.getElementById('visionConditionSelect').value;
+      drawOptics();
+    }
+
+    function initOpticsCanvas() {
+      const canvas = document.getElementById('opticsCanvas');
+      if (!canvas) return;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = 300;
+      drawOptics();
+    }
+
+    function drawOptics() {
+      const canvas = document.getElementById('opticsCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Optical Axis
+      ctx.strokeStyle = '#334155';
+      ctx.setLineDash([4, 4]);
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(10, H / 2);
+      ctx.lineTo(W - 10, H / 2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Eyeball Geometry
+      const eyeCenter = { x: W * 0.75, y: H / 2 };
+      let eyeRadiusX = W * 0.18;
+      const eyeRadiusY = H * 0.38;
+
+      if (appState.optics.condition === 'myopia') {
+        eyeRadiusX *= 1.15; // Alargado
+      } else if (appState.optics.condition === 'hyperopia') {
+        eyeRadiusX *= 0.88; // Corto
+      }
+
+      // Draw Sclera / Retina boundary
+      ctx.beginPath();
+      ctx.ellipse(eyeCenter.x, eyeCenter.y, eyeRadiusX, eyeRadiusY, 0, -Math.PI / 2, Math.PI / 2);
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      // Retina Pigment lining
+      ctx.beginPath();
+      ctx.ellipse(eyeCenter.x, eyeCenter.y, eyeRadiusX - 4, eyeRadiusY - 4, 0, -Math.PI / 2, Math.PI / 2);
+      ctx.strokeStyle = '#e11d48';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Cornea (Anterior dome)
+      const corneaX = eyeCenter.x - eyeRadiusX;
+      ctx.beginPath();
+      ctx.arc(corneaX, eyeCenter.y, eyeRadiusY * 0.65, -Math.PI / 3, Math.PI / 3);
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      // Lens (Cristalino)
+      const lensX = corneaX + (W * 0.04);
+      let lensThickness = appState.optics.isAccommodating ? 14 : 7;
+      ctx.fillStyle = '#0284c7';
+      ctx.beginPath();
+      ctx.ellipse(lensX, eyeCenter.y, lensThickness, eyeRadiusY * 0.45, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#0891b2';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      // Object (Arrow on the left)
+      const maxObjDistanceX = W * 0.55;
+      const minObjDistanceX = W * 0.15;
+      // Map 0.2m -> 6m to canvas pixels
+      const normalizedDist = (appState.optics.distance - 0.2) / (6.0 - 0.2);
+      const objX = corneaX - (minObjDistanceX + normalizedDist * (maxObjDistanceX - minObjDistanceX));
+      const objHeight = 55;
+
+      // Draw arrow object (Upright)
+      ctx.strokeStyle = '#f59e0b';
+      ctx.fillStyle = '#d97706';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(objX, eyeCenter.y);
+      ctx.lineTo(objX, eyeCenter.y - objHeight);
+      ctx.stroke();
+      // Arrowhead
+      ctx.beginPath();
+      ctx.moveTo(objX - 6, eyeCenter.y - objHeight + 10);
+      ctx.lineTo(objX, eyeCenter.y - objHeight);
+      ctx.lineTo(objX + 6, eyeCenter.y - objHeight + 10);
+      ctx.fill();
+
+      // Ray Tracing Calculation
+      const retinaX = eyeCenter.x + eyeRadiusX - 4;
+      let focalPointX = retinaX; // ideal emmetropic focus
+
+      // Determine focal displacement
+      let focalShift = 0;
+      if (appState.optics.condition === 'myopia') {
+        focalShift = -35; // Enfoca por delante
+      } else if (appState.optics.condition === 'hyperopia') {
+        focalShift = +40; // Enfoca detrás
+      }
+
+      // If object is very close but not accommodating:
+      if (appState.optics.distance < 2.0 && !appState.optics.isAccommodating) {
+        focalShift += 30; // Desplazamiento posterior por falta de dioptrías
+      }
+      // If object is far and accommodating:
+      if (appState.optics.distance > 4.0 && appState.optics.isAccommodating) {
+        focalShift -= 25; // Exceso dióptrico
+      }
+
+      const actualFocusX = retinaX + focalShift;
+      const actualFocusY = eyeCenter.y + (objHeight * 0.45); // Inverted on retina
+
+      // Draw Ray 1 (Top of object -> Lens top -> Focal Point)
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.75)';
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(objX, eyeCenter.y - objHeight);
+      ctx.lineTo(lensX, eyeCenter.y - (eyeRadiusY * 0.35));
+      ctx.lineTo(actualFocusX, actualFocusY);
+      ctx.stroke();
+
+      // Draw Ray 2 (Top of object through center of lens)
+      ctx.strokeStyle = 'rgba(56, 189, 248, 0.85)';
+      ctx.beginPath();
+      ctx.moveTo(objX, eyeCenter.y - objHeight);
+      ctx.lineTo(lensX, eyeCenter.y);
+      ctx.lineTo(actualFocusX, actualFocusY);
+      ctx.stroke();
+
+      // Draw Ray 3 (Top of object -> Lens bottom -> Focal Point)
+      ctx.strokeStyle = 'rgba(244, 63, 94, 0.75)';
+      ctx.beginPath();
+      ctx.moveTo(objX, eyeCenter.y - objHeight);
+      ctx.lineTo(lensX, eyeCenter.y + (eyeRadiusY * 0.35));
+      ctx.lineTo(actualFocusX, actualFocusY);
+      ctx.stroke();
+
+      // Draw Inverted Image on retina plane
+      const imgHeight = Math.abs(actualFocusY - eyeCenter.y);
+      ctx.strokeStyle = '#10b981';
+      ctx.fillStyle = '#10b981';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(retinaX, eyeCenter.y);
+      ctx.lineTo(retinaX, eyeCenter.y + imgHeight);
+      ctx.stroke();
+      // Arrowhead inverted
+      ctx.beginPath();
+      ctx.moveTo(retinaX - 5, eyeCenter.y + imgHeight - 8);
+      ctx.lineTo(retinaX, eyeCenter.y + imgHeight);
+      ctx.lineTo(retinaX + 5, eyeCenter.y + imgHeight - 8);
+      ctx.fill();
+
+      // Update UI readouts
+      const diopterText = document.getElementById('lensDiopterText');
+      const focalStatus = document.getElementById('focalStatusText');
+
+      if (appState.optics.isAccommodating) {
+        diopterText.textContent = "+31.0 D (+71 D total con córnea)";
+      } else {
+        diopterText.textContent = "+19.0 D (+59 D total con córnea)";
+      }
+
+      const diff = Math.abs(focalShift);
+      if (diff < 8) {
+        focalStatus.textContent = "Foco Nítido en Fóvea Retiniana";
+        focalStatus.className = "text-emerald-700 font-mono font-bold";
+      } else if (focalShift < 0) {
+        focalStatus.textContent = "Foco Anterior a la Retina (Imagen Borrosa)";
+        focalStatus.className = "text-rose-700 font-mono font-bold";
+      } else {
+        focalStatus.textContent = "Foco Posterior a la Retina (Imagen Borrosa)";
+        focalStatus.className = "text-amber-700 font-mono font-bold";
+      }
+    }
+
+    // -------------------------------------------------------------
+    // MODULE 3: FOTOTRANSDUCCIÓN & VÍA VISUAL
+    // -------------------------------------------------------------
+    function setPhotoState(mode) {
+      appState.photoState = mode;
+      const btnDark = document.getElementById('btnPhotoDark');
+      const btnLight = document.getElementById('btnPhotoLight');
+      const vmCircle = document.getElementById('vmGlowCircle');
+      const vmDisplay = document.getElementById('vmVoltageDisplay');
+      const vmLabel = document.getElementById('vmStateLabel');
+      const cgmpText = document.getElementById('photoCgmpText');
+      const currentText = document.getElementById('photoCurrentText');
+      const gluText = document.getElementById('photoGluText');
+
+      const title = document.getElementById('cascadeTitle');
+      const desc = document.getElementById('cascadeDescription');
+      const formula = document.getElementById('cascadeFormula');
+
+      if (mode === 'dark') {
+        btnDark.className = "px-4 py-2 text-xs font-bold rounded-lg bg-sky-600 text-white transition flex items-center";
+        btnLight.className = "px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-800 transition flex items-center";
+
+        vmCircle.className = "w-36 h-36 rounded-full border-4 border-amber-500 bg-amber-500/10 flex flex-col items-center justify-center transition-all duration-500 shadow-lg shadow-amber-900/30";
+        vmDisplay.textContent = "-40 mV";
+        vmDisplay.className = "text-3xl font-black text-amber-700 font-mono";
+        vmLabel.textContent = "Despolarización Basal";
+        vmLabel.className = "text-[10px] text-amber-700 uppercase font-semibold mt-1";
+
+        cgmpText.textContent = "Elevado (Abre canales Na+)";
+        cgmpText.className = "text-amber-700 font-mono font-bold";
+        currentText.textContent = "Activa (\"Corriente Oscura\")";
+        currentText.className = "text-amber-700 font-mono font-bold";
+        gluText.textContent = "Tónica Continua (Inhibitoria)";
+        gluText.className = "text-rose-700 font-mono font-bold";
+
+        title.innerHTML = `<i class="fa-solid fa-moon text-amber-700 mr-2"></i>Mecanismo Bioquímico: En la Oscuridad`;
+        desc.innerHTML = `
+          <p><strong>1. Síntesis sostenida de segundo mensajero:</strong> La enzima guanilil ciclasa citosólica mantiene concentraciones elevadas de $\\text{GMPc}$ intracelular.</p>
+          <p><strong>2. Apertura de canales CNG:</strong> El $\\text{GMPc}$ se une a canales catiónicos de membrana dependientes de nucleótidos cíclicos (canales CNG), manteniéndolos abiertos.</p>
+          <p><strong>3. Corriente Oscura:</strong> Ingreso masivo continuo de iones $\\text{Na}^+$ y $\\text{Ca}^{2+}$ que compensa la salida de $\\text{K}^+$, sosteniendo el potencial en un estado despolarizado de $\\approx -40\\,\\text{mV}$.</p>
+          <p><strong>4. Exocitosis tónica de neurotransmisor:</strong> En la hendidura sináptica se libera glutamato continuamente, hiperpolarizando e inhibiendo a las células bipolares de centro-ON.</p>
+        `;
+        formula.innerHTML = `$$\\text{Guanylyl cyclase} \\implies \\text{GMPc} \\uparrow \\implies \\text{Canales CNG abiertos} \\implies \\text{Na}^+ \\text{ entra} \\implies V_m \\approx -40\\,\\text{mV}$$`;
+
+      } else {
+        btnLight.className = "px-4 py-2 text-xs font-bold rounded-lg bg-amber-600 text-white transition flex items-center";
+        btnDark.className = "px-4 py-2 text-xs font-bold rounded-lg text-slate-600 hover:text-slate-800 transition flex items-center";
+
+        vmCircle.className = "w-36 h-36 rounded-full border-4 border-sky-400 bg-sky-500/10 flex flex-col items-center justify-center transition-all duration-500 shadow-lg shadow-sky-900/40";
+        vmDisplay.textContent = "-70 mV";
+        vmDisplay.className = "text-3xl font-black text-sky-700 font-mono";
+        vmLabel.textContent = "Hiperpolarización Paradojal";
+        vmLabel.className = "text-[10px] text-sky-700 uppercase font-semibold mt-1";
+
+        cgmpText.textContent = "Muy Reducido (Degradado a GMP)";
+        cgmpText.className = "text-sky-700 font-mono font-bold";
+        currentText.textContent = "Suprimida / Bloqueada";
+        currentText.className = "text-slate-600 font-mono font-bold";
+        gluText.textContent = "Cese de Liberación (Desinhibe)";
+        gluText.className = "text-emerald-700 font-mono font-bold";
+
+        title.innerHTML = `<i class="fa-solid fa-sun text-yellow-400 mr-2"></i>Mecanismo Bioquímico: Estimulación Lumínica`;
+        desc.innerHTML = `
+          <p><strong>1. Fotoisomerización:</strong> El fotón incide en la rodopsina isomerizando el <em>11-cis-retinal</em> a <em>todo-trans-retinal</em>, generando metarodopsina II activada.</p>
+          <p><strong>2. Cascada enzimática de amplificación:</strong> La metarodopsina II activa a la proteína G transducina ($G_t$), cuya subunidad $\\alpha$ activa a la <strong>fosfodiesterasa (PDE)</strong>.</p>
+          <p><strong>3. Hidrólisis de nucleótido cíclico:</strong> La PDE degrada con altísima velocidad el $\\text{GMPc}$ a $5'\\text{-GMP}$, reduciendo drásticamente su concentración citosólica.</p>
+          <p><strong>4. Cierre de canales y cese de glutamato:</strong> Los canales CNG pierden su ligando y se cierran; la salida persistente de $\\text{K}^+$ por el segmento interno hiperpolariza la membrana a $\\approx -70\\,\\text{mV}$. Cesa la liberación de glutamato, desinhibiendo a la neurona bipolar y disparando la vía visual.</p>
+        `;
+        formula.innerHTML = `$$\\text{Fotón} + \\text{Rodopsina} \\to \\text{Transducina} \\to \\text{PDE} \\implies \\text{GMPc} \\downarrow \\implies \\text{Cierre Na}^+ \\implies V_m \\approx -70\\,\\text{mV}$$`;
+      }
+
+      if (window.renderMathInElement) {
+        renderMathInElement(desc, { delimiters: [{left: '$', right: '$', display: false}] });
+        renderMathInElement(formula, { delimiters: [{left: '$$', right: '$$', display: true}] });
+      }
+    }
+
+    // Visual Pathway & Chiasm Lesions
+    function initPathwayCanvas() {
+      const canvas = document.getElementById('pathwayCanvas');
+      if (!canvas) return;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = 320;
+      drawPathway();
+    }
+
+    function simulateVisualLesion(type) {
+      appState.visualLesion = type;
+      const title = document.getElementById('campimetryResultTitle');
+      const desc = document.getElementById('campimetryResultDesc');
+
+      const btnN = document.getElementById('btnLesionNerve');
+      const btnC = document.getElementById('btnLesionChiasm');
+      const btnT = document.getElementById('btnLesionTract');
+
+      btnN.className = "w-full text-left p-2.5 rounded-lg text-xs bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-medium transition";
+      btnC.className = "w-full text-left p-2.5 rounded-lg text-xs bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-medium transition";
+      btnT.className = "w-full text-left p-2.5 rounded-lg text-xs bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 font-medium transition";
+
+      if (type === 'nerve') {
+        btnN.className = "w-full text-left p-2.5 rounded-lg text-xs bg-rose-50 border-2 border-rose-600 text-rose-800 font-bold shadow-xs";
+        title.textContent = "Amaurosis Monocular Derecha Completa";
+        desc.textContent = "La sección completa del nervio óptico derecho interrumpe todas las fibras de las hemirretinas temporal y nasal derechas. Provoca ceguera ipsilateral total con reflejo fotomotor directo ausente en ojo derecho pero consensual conservado.";
+      } else if (type === 'chiasm') {
+        btnC.className = "w-full text-left p-2.5 rounded-lg text-xs bg-rose-50 border-2 border-rose-600 text-rose-800 font-bold shadow-xs";
+        title.textContent = "Hemianopsia Heterónima Bitemporal";
+        desc.textContent = "Un macroadenoma de hipófisis presiona el centro del quiasma óptico lesionando selectivamente las fibras decusantes de ambas hemirretinas nasales. Como las hemirretinas nasales miran hacia los hemicampos temporales, se pierde la visión periférica bilateral (\"visión en túnel\"). Pregunta clásica de ingreso.";
+      } else if (type === 'tract') {
+        btnT.className = "w-full text-left p-2.5 rounded-lg text-xs bg-rose-50 border-2 border-rose-600 text-rose-800 font-bold shadow-xs";
+        title.textContent = "Hemianopsia Homónima Derecha Contralateral";
+        desc.textContent = "La lesión del tracto óptico izquierdo interrumpe las fibras temporales del ojo izquierdo y las nasales decusadas del ojo derecho, perdiendo la visión de todo el hemicampo visual derecho binocular.";
+      }
+
+      drawPathway();
+    }
+
+    function drawPathway() {
+      const canvas = document.getElementById('pathwayCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.clearRect(0, 0, W, H);
+
+      const eyeY = 45;
+      const leftEyeX = W * 0.35;
+      const rightEyeX = W * 0.65;
+      const eyeR = 24;
+
+      // Draw Left Eye
+      ctx.strokeStyle = '#0284c7';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(leftEyeX, eyeY, eyeR, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Draw Right Eye
+      ctx.beginPath();
+      ctx.arc(rightEyeX, eyeY, eyeR, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Labels Eyes
+      ctx.fillStyle = '#475569';
+      ctx.font = '11px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText('Ojo Izquierdo', leftEyeX, eyeY - 28);
+      ctx.fillText('Ojo Derecho', rightEyeX, eyeY - 28);
+
+      // Chiasm coordinates
+      const chiasmX = W * 0.5;
+      const chiasmY = 150;
+
+      // LGB coordinates
+      const lgbLeftX = W * 0.30;
+      const lgbRightX = W * 0.70;
+      const lgbY = 220;
+
+      // Cortex Occipital
+      const cortLeftX = W * 0.32;
+      const cortRightX = W * 0.68;
+      const cortY = 295;
+
+      // Draw Pathways
+      // Left eye Temporal (Ipsilateral, Blue)
+      ctx.strokeStyle = '#38bdf8';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(leftEyeX - 12, eyeY + eyeR);
+      ctx.lineTo(leftEyeX - 10, chiasmY);
+      ctx.lineTo(lgbLeftX, lgbY);
+      ctx.lineTo(cortLeftX, cortY);
+      ctx.stroke();
+
+      // Left eye Nasal (Decussating, Red)
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.moveTo(leftEyeX + 10, eyeY + eyeR);
+      ctx.lineTo(chiasmX, chiasmY);
+      ctx.lineTo(lgbRightX, lgbY);
+      ctx.lineTo(cortRightX, cortY);
+      ctx.stroke();
+
+      // Right eye Nasal (Decussating, Red)
+      ctx.beginPath();
+      ctx.moveTo(rightEyeX - 10, eyeY + eyeR);
+      ctx.lineTo(chiasmX, chiasmY);
+      ctx.lineTo(lgbLeftX, lgbY);
+      ctx.lineTo(cortLeftX, cortY);
+      ctx.stroke();
+
+      // Right eye Temporal (Ipsilateral, Blue)
+      ctx.strokeStyle = '#38bdf8';
+      ctx.beginPath();
+      ctx.moveTo(rightEyeX + 12, eyeY + eyeR);
+      ctx.lineTo(rightEyeX + 10, chiasmY);
+      ctx.lineTo(lgbRightX, lgbY);
+      ctx.lineTo(cortRightX, cortY);
+      ctx.stroke();
+
+      // Labels on nodes
+      ctx.fillStyle = '#1e293b';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('Quiasma Óptico', chiasmX, chiasmY - 8);
+      ctx.fillText('CGL Izq', lgbLeftX - 18, lgbY + 4);
+      ctx.fillText('CGL Der', lgbRightX + 22, lgbY + 4);
+      ctx.fillText('Corteza Visual Occipital', W * 0.5, cortY + 16);
+
+      // Draw Lesion Markers if active
+      if (appState.visualLesion === 'nerve') {
+        drawLesionCross(ctx, rightEyeX, (eyeY + chiasmY) / 2);
+      } else if (appState.visualLesion === 'chiasm') {
+        drawLesionCross(ctx, chiasmX, chiasmY);
+      } else if (appState.visualLesion === 'tract') {
+        drawLesionCross(ctx, (leftEyeX - 10 + lgbLeftX) / 2, (chiasmY + lgbY) / 2);
+      }
+    }
+
+    function drawLesionCross(ctx, x, y) {
+      ctx.strokeStyle = '#ef4444';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(x - 12, y - 12);
+      ctx.lineTo(x + 12, y + 12);
+      ctx.moveTo(x + 12, y - 12);
+      ctx.lineTo(x - 12, y + 12);
+      ctx.stroke();
+    }
+
+    // -------------------------------------------------------------
+    // MODULE 4: REFLEJO ACÚSTICO
+    // -------------------------------------------------------------
+    function testAcousticReflex() {
+      const btn = document.getElementById('btnReflexTest');
+      btn.textContent = "¡Contracción Tensor & Estapedio Activa!";
+      btn.className = "px-4 py-2 bg-emerald-600 text-white font-bold text-xs rounded-xl shadow animate-pulse";
+
+      showQuickFact(
+        "Reflejo de Atenuación Activado",
+        "Latencia de 40 a 100 ms: La contracción del músculo del estribo (NC VII) retrae la platina de la ventana oval, protegiendo las células ciliadas cocleares de la cizalla lesiva."
+      );
+
+      setTimeout(() => {
+        btn.textContent = "Simular Estímulo Lesivo (90 dB)";
+        btn.className = "px-4 py-2 bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs rounded-xl shadow whitespace-nowrap transition";
+      }, 4000);
+    }
+
+    // -------------------------------------------------------------
+    // MODULE 5: CÓCLEA & MECANOTRANSDUCCIÓN
+    // -------------------------------------------------------------
+    function triggerCiliaDeflection(dir) {
+      const vmText = document.getElementById('hairCellVm');
+      const stateText = document.getElementById('hairCellState');
+      const metStatus = document.getElementById('hairCellMetStatus');
+      const kStatus = document.getElementById('hairCellKStatus');
+      const caStatus = document.getElementById('hairCellCaStatus');
+      const spikeStatus = document.getElementById('hairCellSpikeStatus');
+
+      if (dir === 'towards') {
+        appState.corti.deflection = 1;
+        vmText.textContent = "-30 mV";
+        vmText.className = "text-2xl font-black text-amber-700 font-mono";
+        stateText.textContent = "¡Despolarización Mecanoeléctrica!";
+        stateText.className = "text-xs text-amber-700 font-semibold";
+
+        metStatus.textContent = "100% Abiertos (Tensión Tip-Links)";
+        metStatus.className = "text-amber-700 font-mono";
+        kStatus.textContent = "Influjo Masivo desde Endolinfa";
+        kStatus.className = "text-amber-700 font-mono";
+        caStatus.textContent = "Abiertos (Influjo de Ca2+)";
+        caStatus.className = "text-rose-700 font-mono";
+        spikeStatus.textContent = "Tren de PA de Alta Frecuencia";
+        spikeStatus.className = "text-emerald-700 font-mono";
+      } else {
+        appState.corti.deflection = -1;
+        vmText.textContent = "-75 mV";
+        vmText.className = "text-2xl font-black text-sky-700 font-mono";
+        stateText.textContent = "Hiperpolarización (Cierre de Canales)";
+        stateText.className = "text-xs text-sky-700 font-semibold";
+
+        metStatus.textContent = "0% (Tip-Links Relajados)";
+        metStatus.className = "text-slate-600 font-mono";
+        kStatus.textContent = "Mínimo / Interrumpido";
+        kStatus.className = "text-slate-600 font-mono";
+        caStatus.textContent = "Cerrados";
+        caStatus.className = "text-slate-600 font-mono";
+        spikeStatus.textContent = "Silencio Eléctrico / Inhibición";
+        spikeStatus.className = "text-slate-600 font-mono";
+      }
+
+      drawHairCell();
+
+      // Return to baseline after 3.5s
+      setTimeout(() => {
+        appState.corti.deflection = 0;
+        vmText.textContent = "-55 mV";
+        vmText.className = "text-2xl font-black text-emerald-700 font-mono";
+        stateText.textContent = "Tono Basal en Reposo";
+        stateText.className = "text-xs text-emerald-700 font-semibold";
+
+        metStatus.textContent = "15% Abiertos (Basal)";
+        metStatus.className = "text-emerald-700 font-mono";
+        kStatus.textContent = "Moderado";
+        kStatus.className = "text-slate-700 font-mono";
+        caStatus.textContent = "Cerrados";
+        caStatus.className = "text-slate-700 font-mono";
+        spikeStatus.textContent = "Frecuencia Basal";
+        spikeStatus.className = "text-slate-700 font-mono";
+        drawHairCell();
+      }, 3500);
+    }
+
+    function initCortiCanvas() {
+      const canvas = document.getElementById('cortiCanvas');
+      if (!canvas) return;
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = 320;
+      drawHairCell();
+    }
+
+    function drawHairCell() {
+      const canvas = document.getElementById('cortiCanvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      const W = canvas.width;
+      const H = canvas.height;
+
+      ctx.clearRect(0, 0, W, H);
+
+      // Background demarcation: Endolymph (top, amber tint) vs Perilymph (bottom)
+      const junctionY = H * 0.45;
+      ctx.fillStyle = 'rgba(217, 119, 6, 0.12)';
+      ctx.fillRect(0, 0, W, junctionY);
+      ctx.fillStyle = 'rgba(2, 132, 199, 0.08)';
+      ctx.fillRect(0, junctionY, W, H - junctionY);
+
+      // Reticular lamina (tight junction dividing fluid compartments)
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(10, junctionY);
+      ctx.lineTo(W - 10, junctionY);
+      ctx.stroke();
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText('Lámina Reticular (Uniones Estrechas Zonula Occludens)', 20, junctionY - 8);
+
+      // Hair Cell Body (Center-bottom)
+      const cellCenterX = W * 0.5;
+      const cellW = 70;
+      const cellH = 130;
+      const cellTopY = junctionY;
+
+      // Cell Soma
+      ctx.fillStyle = '#ffffff';
+      ctx.strokeStyle = appState.corti.deflection === 1 ? '#d97706' : (appState.corti.deflection === -1 ? '#0284c7' : '#10b981');
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.roundRect(cellCenterX - cellW / 2, cellTopY, cellW, cellH, [0, 0, 20, 20]);
+      ctx.fill();
+      ctx.stroke();
+
+      // Nucleus
+      ctx.fillStyle = '#94a3b8';
+      ctx.beginPath();
+      ctx.arc(cellCenterX, cellTopY + cellH * 0.65, 18, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Stereocilia bundle on the apical surface (bathed in endolymph)
+      const tilt = appState.corti.deflection * 20; // degree of shear
+      const ciliaLengths = [40, 55, 70, 85]; // Staircase organization
+      const ciliaSpacing = 12;
+
+      for (let i = 0; i < ciliaLengths.length; i++) {
+        const baseX = cellCenterX - 20 + i * ciliaSpacing;
+        const baseY = cellTopY;
+        const length = ciliaLengths[i];
+        const tipX = baseX + tilt * (length / 85);
+        const tipY = baseY - length;
+
+        // Cilium stem
+        ctx.strokeStyle = '#f8fafc';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(baseX, baseY);
+        ctx.lineTo(tipX, tipY);
+        ctx.stroke();
+
+        // Tip-Link spring connecting adjacent cilia
+        if (i < ciliaLengths.length - 1) {
+          const nextBaseX = cellCenterX - 20 + (i + 1) * ciliaSpacing;
+          const nextLength = ciliaLengths[i + 1];
+          const nextTipX = nextBaseX + tilt * (nextLength / 85);
+          const nextTipY = baseY - nextLength * 0.75; // Connects to side of taller cilium
+
+          ctx.strokeStyle = appState.corti.deflection === 1 ? '#ef4444' : '#fbbf24';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(tipX, tipY);
+          ctx.lineTo(nextTipX, nextTipY);
+          ctx.stroke();
+        }
+      }
+
+      // Tectorial Membrane above
+      ctx.fillStyle = 'rgba(203, 213, 225, 0.6)';
+      ctx.strokeStyle = '#64748b';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(cellCenterX - 110, cellTopY - 100);
+      ctx.bezierCurveTo(cellCenterX - 30, cellTopY - 90, cellCenterX + 60, cellTopY - 95, cellCenterX + 120, cellTopY - 70);
+      ctx.lineTo(cellCenterX + 120, cellTopY - 82);
+      ctx.bezierCurveTo(cellCenterX + 60, cellTopY - 105, cellCenterX - 30, cellTopY - 102, cellCenterX - 110, cellTopY - 112);
+      ctx.closePath();
+      ctx.fill();
+      ctx.stroke();
+      ctx.fillText('Membrana Tectoria (Acelular, rica en otogelina)', cellCenterX - 80, cellTopY - 115);
+
+      // Nerve Fiber Synapse at base
+      ctx.strokeStyle = '#a855f7';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(cellCenterX, cellTopY + cellH);
+      ctx.lineTo(cellCenterX, cellTopY + cellH + 30);
+      ctx.stroke();
+      ctx.fillStyle = '#7c3aed';
+      ctx.fillText('Fibra Aferente del Nervio Coclear (NC VIII)', cellCenterX - 85, cellTopY + cellH + 42);
+    }
+
+    // -------------------------------------------------------------
+    // MODULE QUIZ: PREGUNTAS TIPO INGRESO MEDICINA UCCUYO
+    // -------------------------------------------------------------
+    const quizData = [
+      {
+        id: 1,
+        question: "Durante la incidencia de un fotón sobre el segmento externo de un bastón retiniano, ¿cuál es el evento biofísico característico de la fototransducción?",
+        options: [
+          "Apertura masiva de canales de Na+ dependientes de voltaje con despolarización a +30 mV.",
+          "Degradación de GMPc por la fosfodiesterasa, cierre de canales CNG e hiperpolarización a -70 mV.",
+          "Aumento de la síntesis citosólica de GMPc y activación tónica de la corriente oscura.",
+          "Incremento súbito de la exocitosis del neurotransmisor inhibidor glutamato."
+        ],
+        correct: 1,
+        explanation: "La paradoja de la fotorrecepción radica en que la luz activa la cascada rodopsina-transducina-PDE degradando el GMPc, lo que cierra los canales de Na+ e hiperpolariza la membrana del fotorreceptor a -70 mV, interrumpiendo la liberación inhibitoria de glutamato."
+      },
+      {
+        id: 2,
+        question: "En la exploración neurológica de los reflejos pupilares, la estimulación lumínica directa en el ojo derecho provoca miosis tanto en el ojo derecho como en el izquierdo. ¿A través de qué estructura mesencefálica se garantiza la respuesta consensual contralateral?",
+        options: [
+          "Colículos inferiores.",
+          "Núcleos de Edinger-Westphal inervados bilateralmente desde el área pretectal.",
+          "Cuerpo geniculado medial talámico.",
+          "Corteza somatosensorial primaria postcentral."
+        ],
+        correct: 1,
+        explanation: "Las neuronas del área pretectal proyectan fibras cruzadas y directas a ambos núcleos de Edinger-Westphal (parasimpático del NC III), permitiendo que el estímulo luminoso unilateral desencadene miosis sincrónica bilateral."
+      },
+      {
+        id: 3,
+        question: "Respecto a la adaptación de impedancias en el oído medio, ¿cuál es el factor primordial que evita que el 99.9% de la energía de la onda aérea se refleje al incidir sobre la perilinfa coclear?",
+        options: [
+          "La contracción refleja tónica del músculo del estribo.",
+          "La relación de superficie de 17:1 entre la membrana timpánica y la ventana oval, sumada a la palanca ósea.",
+          "La igualación permanente de presión a través de la trompa de Eustaquio.",
+          "El calentamiento vascular del aire en la caja timpánica."
+        ],
+        correct: 1,
+        explanation: "La relación geométrica entre el área eficaz del tímpano (~55 mm²) y la ventana oval (~3.2 mm²) concentra la fuerza multiplicando la presión acústica aproximadamente 17 veces, alcanzando una ganancia total de ~22 veces gracias al brazo de palanca martillo-yunque."
+      },
+      {
+        id: 4,
+        question: "¿Cuál es la composición iónica excepcional de la endolinfa que baña el polo apical de las células ciliadas en la rampa media y cuál es su fuerza motriz para la despolarización?",
+        options: [
+          "Baja en K+ y rica en Na+, dependiendo del influjo de Na+ al activarse los canales MET.",
+          "Rica en K+ (~150 mEq/L) con un potencial endococlear de +80 mV que impulsa el influjo apical de K+.",
+          "Idéntica al plasma sanguíneo con alto contenido proteico de albúmina.",
+          "Isotónica con la perilinfa sin gradiente transmembrana apreciable."
+        ],
+        correct: 1,
+        explanation: "La endolinfa coclear es secretada por la estría vascular y contiene ~150 mEq/L de K+ a +80 mV. Al deflexionarse los estereocilios, la apertura de canales mecánicos MET genera un flujo entrante masivo de K+ que despolariza a la célula ciliada."
+      },
+      {
+        id: 5,
+        question: "Un paciente de 48 años presenta una lesión expansiva del quiasma óptico por un adenoma de hipófisis. ¿Qué alteración del campo visual esperas encontrar en la campimetría computarizada?",
+        options: [
+          "Ceguera total monocular derecha.",
+          "Hemianopsia heterónima bitemporal por interrupción de las fibras de las hemirretinas nasales decusadas.",
+          "Hemianopsia homónima contralateral izquierda.",
+          "Escotoma altitudinal inferior bilateral."
+        ],
+        correct: 1,
+        explanation: "En el centro del quiasma óptico decusan únicamente las fibras axónicas provenientes de las hemirretinas nasales de ambos ojos. Debido a que la óptica ocular invierte la imagen, las hemirretinas nasales perciben los campos visuales temporales periféricos; su compresión causa hemianopsia heterónima bitemporal."
+      }
+    ];
+
+    function initQuiz() {
+      const container = document.getElementById('quizContainer');
+      container.innerHTML = '';
+
+      quizData.forEach((q, idx) => {
+        const qCard = document.createElement('div');
+        qCard.className = "bg-white border border-slate-200 p-5 rounded-2xl space-y-3 shadow-sm";
+        qCard.id = `quizCard-${q.id}`;
+
+        let optionsHtml = '';
+        q.options.forEach((opt, optIdx) => {
+          optionsHtml += `
+            <button onclick="handleQuizAnswer(${q.id}, ${optIdx})" id="qBtn-${q.id}-${optIdx}" class="w-full text-left p-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-xs text-slate-700 font-medium transition">
+              ${opt}
+            </button>
+          `;
+        });
+
+        qCard.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-sky-700 font-mono">Pregunta ${idx + 1} de ${quizData.length}</span>
+            <span class="text-[10px] text-slate-600 uppercase font-bold tracking-wider">Fisiología Sensorial UCCuyo</span>
+          </div>
+          <h4 class="text-sm font-bold text-slate-800 leading-relaxed">${q.question}</h4>
+          <div class="space-y-2 pt-1" id="qOptionsBox-${q.id}">
+            ${optionsHtml}
+          </div>
+          <div id="qFeedback-${q.id}" class="hidden p-3 rounded-xl text-xs mt-2"></div>
+        `;
+        container.appendChild(qCard);
+      });
+    }
+
+    function handleQuizAnswer(qId, selectedIdx) {
+      const q = quizData.find(item => item.id === qId);
+      if (!q) return;
+
+      // Lock buttons for this question
+      const optionsBox = document.getElementById(`qOptionsBox-${qId}`);
+      Array.from(optionsBox.children).forEach(btn => {
+        btn.disabled = true;
+      });
+
+      const feedback = document.getElementById(`qFeedback-${qId}`);
+      feedback.classList.remove('hidden');
+
+      const isCorrect = (selectedIdx === q.correct);
+      appState.quizAnswers[qId] = isCorrect;
+
+      // Color chosen and correct buttons
+      const chosenBtn = document.getElementById(`qBtn-${qId}-${selectedIdx}`);
+      const correctBtn = document.getElementById(`qBtn-${qId}-${q.correct}`);
+
+      if (isCorrect) {
+        chosenBtn.className = "w-full text-left p-3 rounded-xl bg-emerald-50 border-2 border-emerald-600 text-xs text-emerald-900 font-bold shadow-xs";
+        feedback.className = "p-3 rounded-xl text-xs mt-2 bg-emerald-50 border border-emerald-200 text-emerald-800";
+        feedback.innerHTML = `<strong>¡Respuesta Correcta!</strong> ${q.explanation}`;
+      } else {
+        chosenBtn.className = "w-full text-left p-3 rounded-xl bg-rose-50 border-2 border-rose-600 text-xs text-rose-900 font-bold shadow-xs";
+        correctBtn.className = "w-full text-left p-3 rounded-xl bg-emerald-50 border border-emerald-500 text-xs text-emerald-900 font-semibold";
+        feedback.className = "p-3 rounded-xl text-xs mt-2 bg-rose-50 border border-rose-200 text-rose-800";
+        feedback.innerHTML = `<strong>Incorrecto.</strong> ${q.explanation}`;
+      }
+
+      // Update total score
+      const correctCount = Object.values(appState.quizAnswers).filter(Boolean).length;
+      document.getElementById('quizScoreDisplay').textContent = `${correctCount} / ${quizData.length}`;
+    }
+
+    function resetQuiz() {
+      appState.quizAnswers = {};
+      document.getElementById('quizScoreDisplay').textContent = `0 / ${quizData.length}`;
+      initQuiz();
+    }
+
+    // -------------------------------------------------------------
+    // INITIALIZATION ON WINDOW LOAD
+    // -------------------------------------------------------------
+    window.onload = function() {
+      // 1. Initialize first tab and components
+      selectEslabon(1);
+      setPhotoState('dark');
+      initQuiz();
+
+      // 2. KaTeX Auto-Render trigger
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+
+      // 3. Handle window resizing for responsive canvas drawings
+      window.addEventListener('resize', () => {
+        if (appState.activeTab === 'mod2') initOpticsCanvas();
+        if (appState.activeTab === 'mod3') initPathwayCanvas();
+        if (appState.activeTab === 'mod5') initCortiCanvas();
+      });
+    };
+  
+    function openFormulasModal() {
+      const modal = document.getElementById('modal-formulas');
+      if (modal) {
+        modal.classList.remove('hidden');
+        try {
+          if (typeof renderMathInElement === 'function') {
+            renderMathInElement(modal, {
+              delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false},
+                {left: '\\(', right: '\\)', display: false},
+                {left: '\\[', right: '\\]', display: true}
+              ],
+              throwOnError: false
+            });
+          }
+        } catch (e) {
+          console.warn('KaTeX render warning:', e);
+        }
+      }
+    }
+
+    function closeFormulasModal() {
+      const modal = document.getElementById('modal-formulas');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function openTutorial() {
+      const modal = document.getElementById('modal-tutorial');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeTutorial() {
+      const modal = document.getElementById('modal-tutorial');
+      if (modal) modal.classList.add('hidden');
+    }
+
+
+
+  </script>
+</body>
+</html>
